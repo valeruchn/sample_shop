@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "212673942750",
+    "project_id": "pizza-shop-182a5",
+    "storage_bucket": "pizza-shop-182a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212673942750:android:db7ad16f4b3e17a6dc9e4f",
+        "android_client_info": {
+          "package_name": "com.example.sample_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212673942750-dp0j8t6qlme3le9ttlcnmn592rrld4gl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sample_shop",
+            "certificate_hash": "e4978bb77bdda4e2d9d15b5e93aa9f53ee93b4e9"
+          }
+        },
+        {
+          "client_id": "212673942750-k4o519k6ktr9o66vefbd3spjtjrjr2tq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB21WouRNmW4L9hQM9T1Xq89lI8W6Ioe1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212673942750-k4o519k6ktr9o66vefbd3spjtjrjr2tq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "212673942750-8lu9jautmbfg8b5vlol64cpgrhtei6l9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "pizza-shop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
