@@ -6,7 +6,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:sample_shop/common/helpers/routing/bottom_navigator/bottom.navigator.dart';
+import 'package:routemaster/routemaster.dart';
+import 'package:sample_shop/common/helpers/routing/routes.dart';
 import 'package:sample_shop/store/actions/products.action.dart';
 import 'package:sample_shop/store/actions/user.action.dart';
 import 'package:sample_shop/store/models/user/user.model.dart';
@@ -28,7 +29,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final Store<AppState> store;
 
-  MyApp({required this.store});
+  const MyApp({required this.store});
 
   // This widget is the root of your application.
   @override
@@ -39,12 +40,13 @@ class MyApp extends StatelessWidget {
     _checkAuth();
     return StoreProvider(
       store: store,
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: BottomNavigator(),
+        routerDelegate: RoutemasterDelegate(routesBuilder: (context) => routes),
+        routeInformationParser: const RoutemasterParser(),
       ),
     );
   }

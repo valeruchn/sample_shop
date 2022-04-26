@@ -7,17 +7,14 @@ class Order extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Подтверждение заказа'),
-      ),
+      appBar: AppBar(title: const Text('Подтверждение заказа'),),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: const <Widget>[
             OrderUserDetails(),
-          ],
-        ),
+          ],),
       ),
-    );
+      );
   }
 }
