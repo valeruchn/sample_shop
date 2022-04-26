@@ -21,6 +21,8 @@ class HomePage extends StatelessWidget {
         child: StoreConnector<AppState, AppState>(
           converter: (store) => store.state,
           builder: (context, state) => GridView.count(
+            // сохранение состояния скрола при переключении на другой скрин
+            key: const PageStorageKey('products list'),
             primary: false,
             padding: const EdgeInsets.all(7),
             crossAxisSpacing: 5,

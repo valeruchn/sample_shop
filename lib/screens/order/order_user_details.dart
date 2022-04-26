@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-
-// Project imports:
-import 'package:sample_shop/store/models/user/user.model.dart';
-import 'package:sample_shop/store/reducers/reducer.dart';
 import 'package:sample_shop/store/actions/order.action.dart';
 import 'package:sample_shop/store/actions/user.action.dart';
 import 'package:sample_shop/store/models/cart/cart.model.dart';
 import 'package:sample_shop/store/models/order/current_order.model.dart';
 import 'package:sample_shop/store/models/user/address.model.dart';
+
+// Project imports:
+import 'package:sample_shop/store/models/user/user.model.dart';
+import 'package:sample_shop/store/reducers/reducer.dart';
 
 class OrderUserDetails extends StatefulWidget {
   const OrderUserDetails({Key? key}) : super(key: key);
