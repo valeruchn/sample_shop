@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:sample_shop/common/helpers/constants/font_settings.dart';
 import 'package:sample_shop/common/widgets/cart/modal_add_to_cart.dart';
 import 'package:sample_shop/store/models/product.model.dart';
@@ -18,10 +20,24 @@ class ProductDetails extends StatelessWidget {
             .where((element) => element.id == productId)
             .first,
         builder: (context, product) => Scaffold(
-            appBar: AppBar(/*title: Text(product.title)*/),
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                  icon: Badge(
+                    badgeContent: StoreConnector<AppState, String>(
+                        converter: (store) =>
+                            store.state.cart.cartItems.length.toString(),
+                        builder: (context, itemsCount) => Text(itemsCount)),
+                    child: const Icon(Icons.shopping_cart),
+                  ),
+                  tooltip: 'Open shopping cart',
+                  onPressed: () => Routemaster.of(context).push('/Cart'),
+                )
+              ],
+            ),
             body: Container(
               decoration: const BoxDecoration(color: Colors.black),
-              child: Column(
+              child: ListView(
                 children: [
                   Image(
                       image: NetworkImage(
@@ -83,18 +99,19 @@ class ProductDetails extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Divider(
-                    color: Colors.white,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: ElevatedButton(
-                        onPressed: () => addToCartModalDialog(context, productId),
-                        child: const Text('Добавить в корзину')),
-                  )
+                  const Padding(padding: EdgeInsets.only(bottom: 60.0))
                 ],
               ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: Container(
+              decoration: const BoxDecoration(color: Colors.black),
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: ElevatedButton(
+                  onPressed: () => addToCartModalDialog(context, productId),
+                  child: const Text('Добавить в корзину')),
             )));
   }
 }

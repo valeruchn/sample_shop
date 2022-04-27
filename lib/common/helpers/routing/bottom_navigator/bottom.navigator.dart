@@ -30,7 +30,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           tabs: const <Widget>[
             Tab(text: 'Home', icon: Icon(Icons.home)),
             Tab(text: 'Settings', icon: Icon(Icons.settings)),
-            Tab(text: 'Cart', icon: Icon(Icons.shopping_cart)),
+            // Tab(text: 'Cart', icon: Icon(Icons.shopping_cart)),
           ],
         ));
   }

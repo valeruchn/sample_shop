@@ -14,16 +14,15 @@ import 'package:sample_shop/screens/profile/profile.dart';
 import 'package:sample_shop/screens/settings/settings.dart';
 
 final routes = RouteMap(routes: {
-  // '/': (route) => MaterialPage(child: BottomNavigator()),
   '/': (route) => TabPage(
-      child: BottomNavigator(), paths: const ['Home', 'Settings', 'Cart']),
+      child: BottomNavigator(), paths: const ['Home', 'Settings']),
   '/Home': (route) => const MaterialPage(child: HomePage()),
-  '/product/:id': (route) => MaterialPage(
-      child: ProductDetails(productId: route.pathParameters['id'] as String)),
-  '/Cart': (route) => MaterialPage(child: Cart()),
   '/Settings': (route) => const MaterialPage(child: Settings()),
   '/Settings/auth': (route) => const MaterialPage(child: Auth()),
-  '/Settings/profile': (route) => const MaterialPage(child: Profile())
+  '/Settings/profile': (route) => const MaterialPage(child: Profile()),
+  '/Cart': (route) => MaterialPage(child: Cart()),
+  '/product/:id': (route) => MaterialPage(
+      child: ProductDetails(productId: route.pathParameters['id'] as String)),
 });
 
 

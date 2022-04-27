@@ -95,7 +95,7 @@ void addToCartModalDialog(BuildContext context, String id) {
                             )),
                         onPressed: () {
                           add();
-                          Routemaster.of(context)..pop()..push('/Cart');
+                          Routemaster.of(context).pop();
                         },
                       ),
                     )

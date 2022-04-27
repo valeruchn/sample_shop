@@ -5,10 +5,10 @@ import 'package:dio/dio.dart';
 import 'package:sample_shop/common/helpers/api/app_api.dart';
 import 'package:sample_shop/store/models/product.model.dart';
 
-Future<List<ProductModel>> getProducts() async {
+Future<List<ProductModel>> getProducts({ String? category = 'all', String? search = '' }) async {
   try {
     final Response<dynamic> res =
-        await api.get<dynamic>('/products/get-products');
+        await api.get<dynamic>('/products/get-products?category=$category&search=$search');
     final List<dynamic> products = res.data as List<dynamic>;
     // print('products: $products');
     return products

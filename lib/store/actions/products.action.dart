@@ -1,9 +1,15 @@
 // Project imports:
 import 'package:sample_shop/store/models/product.model.dart';
 
-class GetProductsPending{}
+class GetProductsPending {
+  GetProductsPending({this.category, this.search});
+
+  final String? category;
+  final String? search;
+}
 
 class GetProductsSuccess {
-  final List<ProductModel> products;
   GetProductsSuccess(this.products);
+
+  final List<ProductModel> products;
 }

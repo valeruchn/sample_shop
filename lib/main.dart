@@ -43,6 +43,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         title: 'Flutter Demo',
         theme: ThemeData(
+          textTheme: const TextTheme(
+              titleLarge: TextStyle(fontSize: 24, color: Colors.white)),
           primarySwatch: Colors.blue,
         ),
         routerDelegate: RoutemasterDelegate(routesBuilder: (context) => routes),
