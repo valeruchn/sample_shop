@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sample_shop/store/actions/order.action.dart';
 import 'package:sample_shop/store/models/cart/cart_item.model.dart';
+import 'package:sample_shop/store/models/cart/cart_query.model.dart';
+import 'package:sample_shop/store/models/order/create_order_dto.model.dart';
 import 'package:sample_shop/store/models/order/current_order.model.dart';
 import 'package:sample_shop/store/models/user/address.model.dart';
 
@@ -31,17 +33,15 @@ class FormOrderControlModel extends ChangeNotifier {
 
   set flat(String value) => _flat = value;
 
-  void createOrder(List<CartItemModel> products, int totalPrice, dynamic Function(dynamic) dispatch) {
-    CurrentOrderModel _order = CurrentOrderModel(
+  void createOrder(List<CartQueryModel> products, int totalPrice, dynamic Function(dynamic) dispatch) {
+    CreateOrderDtoModel _order = CreateOrderDtoModel(
         firstName: _firstName ?? '',
         phone: _phone ?? '',
         address: AddressModel(
             street: _street ?? '',
             houseNumber: _houseNumber ?? '',
             flat: _flat),
-        products: products,
-        totalPrice: totalPrice,
-        status: status);
+        products: products);
         dispatch(CreateOrderPending(order: _order));
   }
 

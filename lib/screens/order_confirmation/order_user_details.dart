@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:sample_shop/store/models/cart/cart_query.model.dart';
+import 'package:sample_shop/store/models/order/create_order_dto.model.dart';
 
 // Project imports:
 import 'package:sample_shop/store/models/user/user.model.dart';
@@ -119,22 +121,25 @@ class _OrderUserDetailsState extends State<OrderUserDetails> {
                         Container(
                           margin: const EdgeInsets.only(top: 20.0),
                           child: StoreConnector<AppState, dynamic>(
-                            converter: (store) => (CurrentOrderModel order) =>
+                            converter: (store) => (CreateOrderDtoModel order) =>
                                 store
                                     .dispatch(CreateOrderPending(order: order)),
                             builder: (context, createOrder) => ElevatedButton(
                               onPressed: () {
                                 var _state = _formKey.currentState!;
                                 if (_state.validate()) {
-                                  createOrder(CurrentOrderModel(
-                                      firstName: _name.text,
-                                      phone: user.phone,
-                                      address: AddressModel(
-                                          street: _street.text,
-                                          houseNumber: _houseNumber.text),
-                                      products: cart.cartItems,
-                                      totalPrice: cart.totalPrice,
-                                      status: 'incoming'));
+                                  createOrder(CreateOrderDtoModel(
+                                    firstName: _name.text,
+                                    phone: user.phone,
+                                    address: AddressModel(
+                                        street: _street.text,
+                                        houseNumber: _houseNumber.text),
+                                    // todo получать корзину в epic
+                                    products: cart.cartItems
+                                        .map((i) => CartQueryModel(
+                                            id: i.id, count: i.count))
+                                        .toList(),
+                                  ));
                                 }
                                 // Navigator.pop(context);
                               },
@@ -149,7 +154,7 @@ class _OrderUserDetailsState extends State<OrderUserDetails> {
                                   children: [
                                     if (currentOrder != null)
                                       Text(
-                                          'Заказ создан, статус: ${currentOrder.status ?? ''}'),
+                                          'Заказ создан, статус: ${currentOrder.status}'),
                                   ],
                                 ))
                       ],

@@ -13,8 +13,13 @@ Stream<void> createOrderEpic(
   return actions
       .where((dynamic action) => action is CreateOrderPending)
       .switchMap((dynamic action) =>
-          Stream<CurrentOrderModel>.fromFuture(addOrder(action.order))
+          // Добавляем заказ на api
+          Stream<CurrentOrderModel>.fromFuture(createNewOrder(action.order)))
+      .switchMap((CurrentOrderModel order) =>
+          // Добавляем заказ в firestore
+          Stream<CurrentOrderModel>.fromFuture(addOrder(order))
               .expand<dynamic>((CurrentOrderModel order) =>
+                  // Добавляем заказ в state
                   <dynamic>[CreateOrderSuccess(order: order), ClearCart()])
               .handleError((dynamic e) => {print(e)}));
 }
