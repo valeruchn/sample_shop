@@ -9,7 +9,7 @@ class GetCartSuccess {
   GetCartSuccess({required this.cartItems});
 }
 
-// Получение товара в корзину
+// Добавление товара в корзину
 class AddToCartPending {
   final String id;
   final int count;

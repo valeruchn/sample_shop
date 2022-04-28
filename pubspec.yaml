@@ -47,6 +47,7 @@ dependencies:
     intl: ^0.17.0
     routemaster: ^1.0.0
     badges: ^2.0.2
+    shared_preferences: ^2.0.13
 
 dev_dependencies:
     flutter_test:

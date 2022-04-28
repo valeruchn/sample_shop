@@ -133,6 +133,7 @@ class _OrderUserDetailsState extends State<OrderUserDetails> {
                                           street: _street.text,
                                           houseNumber: _houseNumber.text),
                                       products: cart.cartItems,
+                                      totalPrice: cart.totalPrice,
                                       status: 'incoming'));
                                 }
                                 // Navigator.pop(context);

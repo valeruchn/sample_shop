@@ -15,10 +15,12 @@ class CurrentOrderModel {
     required this.phone,
     required this.address,
     required this.products,
+    required this.totalPrice,
     this.status
   });
 
   final List<CartItemModel> products;
+  final int totalPrice;
   final String firstName;
   final String phone;
   final AddressModel address;

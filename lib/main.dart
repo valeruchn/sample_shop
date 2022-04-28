@@ -1,20 +1,22 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
 //Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
-
 //firebase
+import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:routemaster/routemaster.dart';
+// Project imports:
 import 'package:sample_shop/common/helpers/routing/routes.dart';
+import 'package:sample_shop/store/actions/cart.action.dart';
 import 'package:sample_shop/store/actions/products.action.dart';
 import 'package:sample_shop/store/actions/user.action.dart';
 import 'package:sample_shop/store/models/user/user.model.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
 import 'package:sample_shop/store/store.dart';
-
-import 'firebase_options.dart';
 
 void main() async {
   //firebase connection
@@ -31,11 +33,12 @@ class MyApp extends StatelessWidget {
 
   const MyApp({required this.store});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     // Запрос продуктов
     store.dispatch(GetProductsPending());
+    // Запрос корзины
+    store.dispatch(GetCartPending());
     // Проверка авторизации
     _checkAuth();
     return StoreProvider(

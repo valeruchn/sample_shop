@@ -7,9 +7,6 @@ part of 'cart.model.dart';
 // **************************************************************************
 
 CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel(
-      cartQueryParams: (json['cartQueryParams'] as List<dynamic>)
-          .map((e) => CartQueryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
       cartItems: (json['cartItems'] as List<dynamic>)
           .map((e) => CartItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -17,8 +14,6 @@ CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel(
     );
 
 Map<String, dynamic> _$CartModelToJson(CartModel instance) => <String, dynamic>{
-      'cartQueryParams':
-          instance.cartQueryParams.map((e) => e.toJson()).toList(),
       'cartItems': instance.cartItems.map((e) => e.toJson()).toList(),
       'totalPrice': instance.totalPrice,
     };

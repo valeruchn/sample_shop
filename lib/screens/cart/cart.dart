@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sample_shop/screens/order/order_confirmation.dart';
+import 'package:sample_shop/screens/order_confirmation/order_confirmation.dart';
 import 'package:sample_shop/store/actions/cart.action.dart';
-
-// Project imports:
-import 'package:sample_shop/store/models/cart/cart.model.dart';
 import 'package:sample_shop/store/models/cart/cart_item.model.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
 

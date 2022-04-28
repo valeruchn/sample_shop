@@ -28,8 +28,9 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           indicator: const UnderlineTabIndicator(
               borderSide: BorderSide(width: 0), insets: EdgeInsets.all(0)),
           tabs: const <Widget>[
-            Tab(text: 'Home', icon: Icon(Icons.home)),
-            Tab(text: 'Settings', icon: Icon(Icons.settings)),
+            Tab(text: 'Домашня', icon: Icon(Icons.home)),
+            Tab(text: 'Замовлення', icon: Icon(Icons.shopping_basket)),
+            Tab(text: 'Додатково', icon: Icon(Icons.settings)),
             // Tab(text: 'Cart', icon: Icon(Icons.shopping_cart)),
           ],
         ));

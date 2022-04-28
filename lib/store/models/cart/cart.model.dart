@@ -9,12 +9,10 @@ part 'cart.model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class CartModel {
-  final List<CartQueryModel> cartQueryParams;
   final List<CartItemModel> cartItems;
   final int totalPrice;
 
   CartModel({
-    required this.cartQueryParams,
     required this.cartItems,
     required this.totalPrice,
   });

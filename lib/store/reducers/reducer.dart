@@ -12,13 +12,13 @@ import 'package:sample_shop/store/reducers/user.reducer.dart';
 
 class AppState {
   AppState({
-    required this.auth,
+    // required this.auth,
     required this.user,
     required this.products,
     required this.cart,
     required this.orders
   });
-  AuthUserFromFirebase auth;
+  // AuthUserFromFirebase auth;
   UserModel user;
   List<ProductModel> products;
   CartModel cart;
@@ -27,7 +27,7 @@ class AppState {
 
 AppState appStateReducer(AppState state, dynamic action) {
   return AppState(
-    auth: authReducer(state.auth, action),
+    // auth: authReducer(state.auth, action),
     user: userReducer(state.user, action),
     products: productsReducer(state.products, action),
     cart: cartReducer(state.cart, action),

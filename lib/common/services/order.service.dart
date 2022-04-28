@@ -19,3 +19,7 @@ Future<CurrentOrderModel> addOrder(CurrentOrderModel order) {
           CurrentOrderModel.fromJson(data.data() as Map<String, dynamic>))
       .catchError((error) => print("Failed to add order: $error"));
 }
+
+// Future<List<CurrentOrderModel>> getOrdersLog() {
+//
+// }

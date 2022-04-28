@@ -31,7 +31,7 @@ class FormOrderControlModel extends ChangeNotifier {
 
   set flat(String value) => _flat = value;
 
-  void createOrder(List<CartItemModel> products, dynamic Function(dynamic) dispatch) {
+  void createOrder(List<CartItemModel> products, int totalPrice, dynamic Function(dynamic) dispatch) {
     CurrentOrderModel _order = CurrentOrderModel(
         firstName: _firstName ?? '',
         phone: _phone ?? '',
@@ -40,6 +40,7 @@ class FormOrderControlModel extends ChangeNotifier {
             houseNumber: _houseNumber ?? '',
             flat: _flat),
         products: products,
+        totalPrice: totalPrice,
         status: status);
         dispatch(CreateOrderPending(order: _order));
   }

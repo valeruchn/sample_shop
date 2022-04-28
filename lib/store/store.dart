@@ -16,13 +16,13 @@ import 'package:sample_shop/store/models/product.model.dart';
 import 'package:sample_shop/store/models/user/user.model.dart';
 
 AppState initialState = AppState(
-    auth: AuthUserFromFirebase.init(),
+    // auth: AuthUserFromFirebase.init(),
     user: UserModel(
       uid: '',
       phone: '',
     ),
     products: <ProductModel>[],
-    cart: CartModel(cartQueryParams: [], cartItems: [], totalPrice: 0),
+    cart: CartModel(cartItems: [], totalPrice: 0),
     orders: OrderModel());
 
 final Store<AppState> store = Store<AppState>(appStateReducer,
@@ -36,8 +36,9 @@ final Store<AppState> store = Store<AppState>(appStateReducer,
       EpicMiddleware<dynamic>(addToCartEpic),
       EpicMiddleware<dynamic>(deleteFromCartEpic),
       EpicMiddleware<dynamic>(decrementItemFromCartEpic),
-      EpicMiddleware<dynamic>(authSendSmsEpic),
-      EpicMiddleware<dynamic>(authCheckSmsEpic),
+      // EpicMiddleware<dynamic>(authSendSmsEpic),
+      // EpicMiddleware<dynamic>(authCheckSmsEpic),
       EpicMiddleware<dynamic>(updateUserProfileEpic),
       EpicMiddleware<dynamic>(createOrderEpic),
+      EpicMiddleware<dynamic>(clearCartEpic),
     ]);

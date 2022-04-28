@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sample_shop/screens/order/formOrderControlModel.dart';
+import 'package:sample_shop/screens/order_confirmation/formOrderControlModel.dart';
 
 class FormOrderControlProvider
     extends InheritedNotifier<FormOrderControlModel> {
