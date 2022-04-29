@@ -41,4 +41,6 @@ final Store<AppState> store = Store<AppState>(appStateReducer,
       EpicMiddleware<dynamic>(updateUserProfileEpic),
       EpicMiddleware<dynamic>(createOrderEpic),
       EpicMiddleware<dynamic>(clearCartEpic),
+      EpicMiddleware<dynamic>(getUserOrdersEpic),
+      EpicMiddleware<dynamic>(getCurrentOrderEpic)
     ]);

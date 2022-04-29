@@ -1,16 +1,14 @@
 // flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
+import 'package:sample_shop/store/actions/user.action.dart';
 
 // Project imports:
 import 'package:sample_shop/store/models/user/user.model.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
-import 'package:sample_shop/store/actions/user.action.dart';
 
 class ProfileData extends StatefulWidget {
   const ProfileData({Key? key}) : super(key: key);

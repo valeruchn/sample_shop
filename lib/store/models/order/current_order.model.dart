@@ -12,22 +12,26 @@ part 'current_order.model.g.dart';
 class CurrentOrderModel {
   CurrentOrderModel({
     required this.id,
+    required this.oid,
     required this.firstName,
     required this.phone,
     required this.address,
     required this.products,
     required this.totalPrice,
-    required this.status
+    required this.status,
+    required this.date
   });
 
   @JsonKey(name: '_id')
   final String id;
+  final String oid;
   final List<CartItemModel> products;
   final int totalPrice;
   final String firstName;
   final String phone;
   final AddressModel address;
   final String status;
+  final DateTime date;
 
   // конвертация из JSON в обьект
   factory CurrentOrderModel.fromJson(Map<String, dynamic> json) =>

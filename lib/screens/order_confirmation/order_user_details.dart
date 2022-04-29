@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:sample_shop/store/models/cart/cart_query.model.dart';
 import 'package:sample_shop/store/models/order/create_order_dto.model.dart';
 
@@ -150,6 +151,12 @@ class _OrderUserDetailsState extends State<OrderUserDetails> {
                         StoreConnector<AppState, CurrentOrderModel?>(
                             converter: (store) =>
                                 store.state.orders.currentOrder,
+                            // onInit: (store) {
+                            //   if (store.state.orders.currentOrder != null) {
+                            //     Routemaster.of(context).push(
+                            //         '/Orders/${store.state.orders.currentOrder!.id}');
+                            //   }
+                            // },
                             builder: (context, currentOrder) => Row(
                                   children: [
                                     if (currentOrder != null)

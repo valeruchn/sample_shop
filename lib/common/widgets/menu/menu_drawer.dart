@@ -1,7 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 // Flutter imports:
 import 'package:sample_shop/store/actions/products.action.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -30,7 +33,7 @@ class MenuDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.local_pizza),
+              leading: const FaIcon(FontAwesomeIcons.pizzaSlice),
               title: const Text('Пицца'),
               onTap: () => query('pizza'),
             ),
@@ -40,7 +43,7 @@ class MenuDrawer extends StatelessWidget {
               onTap: () => query('rolls'),
             ),
             ListTile(
-              leading: const Icon(Icons.support_sharp),
+              leading: const FaIcon(FontAwesomeIcons.kitchenSet),
               title: const Text('Сеты'),
               onTap: () => query('sets'),
             ),

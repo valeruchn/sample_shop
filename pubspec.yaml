@@ -48,6 +48,7 @@ dependencies:
     routemaster: ^1.0.0
     badges: ^2.0.2
     shared_preferences: ^2.0.13
+    font_awesome_flutter: ^10.1.0
 
 dev_dependencies:
     flutter_test:

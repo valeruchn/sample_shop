@@ -14,7 +14,6 @@ class Cart extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Cart')),
       body: StoreConnector<AppState, List<CartItemModel>>(
-        // аналог componentDidMount
         onInit: (store) {
           if (store.state.cart.cartItems.isEmpty) {
             store.dispatch(GetCartPending());
@@ -47,7 +46,31 @@ class Cart extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(product.title),
-                                    Text('${product.count}')
+                                    StoreConnector<AppState, Function({String id, String option})>(
+                                        converter: (store) => (
+                                                {String id = '',
+                                                String option = ''}) {
+                                              if (option == 'inc') {
+                                                return store.dispatch(
+                                                    AddToCartPending(
+                                                        id: id, count: 1));
+                                              } else if (option == 'dec') {
+                                                return store.dispatch(
+                                                    DecrementItemFromCartPending(
+                                                        id: id));
+                                              }
+                                            },
+                                        builder: (context, changeCount) => Row(
+                                              children: [
+                                                TextButton(
+                                                    onPressed: () => changeCount(id: product.id, option: 'dec'),
+                                                    child: const Text('-')),
+                                                Text('${product.count}'),
+                                                TextButton(
+                                                    onPressed: () => changeCount(id: product.id, option: 'inc'),
+                                                    child: const Text('+')),
+                                              ],
+                                            )),
                                   ],
                                 ),
                               ),

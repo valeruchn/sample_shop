@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         endDrawer: const MenuDrawer(),
         // Для получения данных из стейт
         body: Container(
-          color: Colors.black,
+          color: const Color(0xFF2A353A),
           child: StoreConnector<AppState, AppState>(
             converter: (store) => store.state,
             builder: (context, state) => Column(
@@ -76,8 +76,8 @@ class _HomePageState extends State<HomePage> {
                     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                     primary: false,
                     padding: const EdgeInsets.all(7),
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                     crossAxisCount: 2,
                     // соотношение сторон ячеек грид сетки
                     childAspectRatio: (1 / 1.5),

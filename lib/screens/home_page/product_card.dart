@@ -38,10 +38,13 @@ class ProductCard extends StatelessWidget {
     }
 
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.blue),
-        // Скругление краев карточки товара
-        // borderRadius: BorderRadius.circular(20)
+      decoration: const BoxDecoration(
+          color: Color(0xFF141A1C),
+          boxShadow: [
+          BoxShadow(
+              blurRadius: 10,
+              color: Colors.black,
+              offset: Offset(1, 3))]
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
