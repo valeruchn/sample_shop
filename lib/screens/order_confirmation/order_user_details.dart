@@ -31,7 +31,7 @@ class _OrderUserDetailsState extends State<OrderUserDetails> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, UserModel>(
       onInit: (store) =>
-          store.dispatch(GetUserProfilePending(id: store.state.user.uid)),
+          store.dispatch(GetUserProfilePending()),
       converter: (store) => store.state.user,
       builder: (context, user) {
         // user form fields:
@@ -131,7 +131,6 @@ class _OrderUserDetailsState extends State<OrderUserDetails> {
                                 if (_state.validate()) {
                                   createOrder(CreateOrderDtoModel(
                                     firstName: _name.text,
-                                    phone: user.phone,
                                     address: AddressModel(
                                         street: _street.text,
                                         houseNumber: _houseNumber.text),

@@ -36,7 +36,6 @@ class FormOrderControlModel extends ChangeNotifier {
   void createOrder(List<CartQueryModel> products, int totalPrice, dynamic Function(dynamic) dispatch) {
     CreateOrderDtoModel _order = CreateOrderDtoModel(
         firstName: _firstName ?? '',
-        phone: _phone ?? '',
         address: AddressModel(
             street: _street ?? '',
             houseNumber: _houseNumber ?? '',

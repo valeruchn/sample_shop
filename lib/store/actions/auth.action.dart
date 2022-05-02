@@ -1,5 +1,15 @@
 // Project imports:
 // import 'package:sample_shop/store/models/auth/firebase_auth_user.model.dart';
+
+class GetUserTokenPending {
+  GetUserTokenPending({required this.uid, required this.phone});
+
+  String uid;
+  String phone;
+}
+// сброс токена в хранилище и обнуление профиля в стейт
+class UnauthorizedUser {}
+
 //
 // class SendSmsPending {
 //   SendSmsPending({required this.phone});

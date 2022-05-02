@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:routemaster/routemaster.dart';
 
 // Project imports:
 import 'package:sample_shop/screens/profile/profile.dart';
@@ -183,10 +184,7 @@ class _AuthState extends State<Auth> {
                 ],
               ),
               actions: <Widget>[
-                StoreConnector<AppState, dynamic>(
-                  converter: (store) => (UserModel user) =>
-                      store.dispatch(RegistrationUserPending(user: user)),
-                  builder: (context, saveUser) => OutlinedButton(
+                 OutlinedButton(
                     child: const Text("Отправить"),
                     onPressed: () {
                       FirebaseAuth auth = FirebaseAuth.instance;
@@ -200,20 +198,17 @@ class _AuthState extends State<Auth> {
                       _codeController.clear();
                       auth.signInWithCredential(_credential).then((result) {
                         if (result.user != null) {
-                          // Закрываем модальное окно, удаляем маршрут Auth и ушим маршрут
+                          // Закрываем модальное окно, удаляем маршрут Auth и пушим маршрут
                           // Profile. При нажатии назад откроется Settings
                           // Оператор .. вызов нескольких методов одного и того же объекта
                           // .. помогает вызывать ряд методов, которые не обязательно возвращают объект.
-                          Navigator.of(context)..pop()..pop()..push(
-                              MaterialPageRoute(
-                                  builder: (context) => const Profile()));
+                          Routemaster.of(context)..pop()..pop()..push('/profile');
                         }
                       }).catchError((e) {
                         print('error: $e');
                       });
                     },
                   ),
-                )
               ],
             ));
   }

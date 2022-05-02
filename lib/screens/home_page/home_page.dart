@@ -1,12 +1,14 @@
 // Flutter imports:
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:sample_shop/common/widgets/menu/menu_drawer.dart';
 import 'package:sample_shop/common/widgets/menu/search_panel.dart';
 import 'package:sample_shop/screens/home_page/product_card.dart';
+
 // Project imports:
 import 'package:sample_shop/store/reducers/reducer.dart';
 
@@ -21,6 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isOpenSearch = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,6 +35,7 @@ class _HomePageState extends State<HomePage> {
         key: _scaffoldKey,
         appBar: AppBar(
           title: const Text('Home'),
+          backgroundColor: const Color(0xFF313E44),
           actions: [
             IconButton(
                 onPressed: () {
@@ -57,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                 child: const Icon(Icons.shopping_cart),
               ),
               tooltip: 'Open shopping cart',
-              onPressed: () => Routemaster.of(context).push('/Cart'),
+              onPressed: () => Routemaster.of(context).push('/cart'),
             )
           ],
         ),
@@ -73,7 +77,8 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: GridView.count(
                     // Отключает фокус и клавиатуру при скроле
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
                     primary: false,
                     padding: const EdgeInsets.all(7),
                     crossAxisSpacing: 10,

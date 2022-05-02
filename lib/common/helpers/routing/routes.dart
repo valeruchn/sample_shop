@@ -21,9 +21,9 @@ final routes = RouteMap(routes: {
   '/Home': (route) => const MaterialPage(child: HomePage()),
   '/Orders': (route) => const MaterialPage(child: OrdersLog()),
   '/Settings': (route) => const MaterialPage(child: Settings()),
-  '/Settings/auth': (route) => const MaterialPage(child: Auth()),
-  '/Settings/profile': (route) => const MaterialPage(child: Profile()),
-  '/Cart': (route) => MaterialPage(child: Cart()),
+  '/cart': (route) => MaterialPage(child: Cart()),
+  '/auth': (route) => const MaterialPage(child: Auth()),
+  '/profile': (route) => const MaterialPage(child: Profile()),
   '/product/:id': (route) => MaterialPage(
       child: ProductDetails(productId: route.pathParameters['id'] as String)),
   '/order/:id': (route) => MaterialPage(child: OrderDetails(orderId: route.pathParameters['id'] as String,)),

@@ -29,7 +29,7 @@ Stream<void> getUserOrdersEpic(
   return actions
       .where((action) => action is GetOrdersPending)
       .switchMap((action) => Stream<List<CurrentOrderModel>>.fromFuture(
-          getOrdersLog(action.phone)))
+          getOrdersLog()))
       .expand((List<CurrentOrderModel> orders) =>
           [GetOrdersSuccess(ordersLog: orders)])
       .handleError((dynamic e) => {print(e)});

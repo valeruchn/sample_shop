@@ -31,7 +31,7 @@ class ProductDetails extends StatelessWidget {
                     child: const Icon(Icons.shopping_cart),
                   ),
                   tooltip: 'Open shopping cart',
-                  onPressed: () => Routemaster.of(context).push('/Cart'),
+                  onPressed: () => Routemaster.of(context).push('/cart'),
                 )
               ],
             ),

@@ -10,14 +10,12 @@ part 'create_order_dto.model.g.dart';
 class CreateOrderDtoModel {
   CreateOrderDtoModel({
     required this.firstName,
-    required this.phone,
     required this.address,
     required this.products,
   });
 
   final List<CartQueryModel> products;
   final String firstName;
-  final String phone;
   final AddressModel address;
 
   // конвертация из JSON в обьект

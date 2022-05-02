@@ -5,6 +5,7 @@ import 'package:sample_shop/common/localStorage/cart_local_storage_actions.dart'
 
 // Project imports:
 import 'package:sample_shop/common/services/cart.service.dart';
+import 'package:sample_shop/store/models/cart/cart.model.dart';
 import 'package:sample_shop/store/models/cart/cart_item.model.dart';
 import 'package:sample_shop/store/actions/cart.action.dart';
 import 'package:sample_shop/store/models/cart/cart_query.model.dart';
@@ -17,9 +18,9 @@ Stream<void> getCartEpic(Stream<dynamic> actions, EpicStore<dynamic> store) {
       .switchMap((dynamic action) => Stream<List<CartQueryModel>>.fromFuture(
           getProductsFromLocalStorage()))
       .switchMap((List<CartQueryModel> query) =>
-          Stream<List<CartItemModel>>.fromFuture(getCartItems(query))
-              .expand<dynamic>((List<CartItemModel> cartItems) =>
-                  <dynamic>[GetCartSuccess(cartItems: cartItems)])
+          Stream<CartModel>.fromFuture(getCartItems(query))
+              .expand<dynamic>((CartModel cart) =>
+                  <dynamic>[GetCartSuccess(cart: cart)])
               .handleError((dynamic e) => {print('error: $e')}));
 }
 

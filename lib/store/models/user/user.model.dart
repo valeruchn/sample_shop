@@ -9,7 +9,6 @@ part 'user.model.g.dart';
 @JsonSerializable()
 class UserModel {
   UserModel({
-    required this.uid,
     required this.phone,
     this.firstName,
     this.lastName,
@@ -18,7 +17,6 @@ class UserModel {
     this.address,
   });
 
-  final String uid;
   String phone;
   String? firstName;
   String? lastName;

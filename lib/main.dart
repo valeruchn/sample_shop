@@ -1,24 +1,23 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 //Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
-
-//firebase
-import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:routemaster/routemaster.dart';
 
 // Project imports:
 import 'package:sample_shop/common/helpers/routing/routes.dart';
+import 'package:sample_shop/store/actions/auth.action.dart';
 import 'package:sample_shop/store/actions/cart.action.dart';
 import 'package:sample_shop/store/actions/products.action.dart';
 import 'package:sample_shop/store/actions/user.action.dart';
-import 'package:sample_shop/store/models/user/user.model.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
 import 'package:sample_shop/store/store.dart';
+
+//firebase
+import 'firebase_options.dart';
 
 void main() async {
   //firebase connection
@@ -66,11 +65,10 @@ class MyApp extends StatelessWidget {
   void _checkAuth() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
-        store.dispatch(
-            RegistrationUserSuccess(user: UserModel(uid: '', phone: '')));
+        store.dispatch(UnauthorizedUser());
       } else {
-        store.dispatch(RegistrationUserSuccess(
-            user: UserModel(uid: user.uid, phone: user.phoneNumber ?? '')));
+        store.dispatch(
+            GetUserTokenPending(uid: user.uid, phone: user.phoneNumber ?? ''));
       }
     });
   }

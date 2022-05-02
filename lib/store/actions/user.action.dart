@@ -1,33 +1,9 @@
 import 'package:sample_shop/store/models/user/user.model.dart';
 
-class GetUsersPending {}
-
-class GetUsersSuccess {
-  const GetUsersSuccess(this.users);
-
-  final List<UserModel> users;
-}
-
-class GetUserProfilePending {
-  GetUserProfilePending({required this.id});
-
-  final String id;
-}
+class GetUserProfilePending {}
 
 class GetUserProfileSuccess {
   GetUserProfileSuccess({required this.user});
-
-  final UserModel user;
-}
-
-class RegistrationUserPending {
-  RegistrationUserPending({required this.user});
-
-  final UserModel user;
-}
-
-class RegistrationUserSuccess {
-  RegistrationUserSuccess({required this.user});
 
   final UserModel user;
 }
@@ -43,3 +19,25 @@ class UpdateProfileSuccess {
 
   final UserModel user;
 }
+
+class ClearUserProfile {}
+
+// class GetUsersPending {}
+//
+// class GetUsersSuccess {
+//   const GetUsersSuccess(this.users);
+//
+//   final List<UserModel> users;
+// }
+
+// class RegistrationUserPending {
+//   RegistrationUserPending({required this.user});
+//
+//   final UserModel user;
+// }
+//
+// class RegistrationUserSuccess {
+//   RegistrationUserSuccess({required this.user});
+//
+//   final UserModel user;
+// }

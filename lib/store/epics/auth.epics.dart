@@ -1,11 +1,36 @@
 // Package imports:
-// import 'package:redux_epics/redux_epics.dart';
-// import 'package:rxdart/rxdart.dart';
-// import 'package:sample_shop/common/services/auth.service.dart';
-//
+import 'package:redux_epics/redux_epics.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:sample_shop/common/localStorage/auth_token_storage_options.dart';
+import 'package:sample_shop/common/services/auth.service.dart';
+
 // // Project imports:
-// import 'package:sample_shop/store/actions/auth.action.dart';
-// import 'package:sample_shop/store/models/auth/firebase_auth_user.model.dart';
+import 'package:sample_shop/store/actions/auth.action.dart';
+import 'package:sample_shop/store/actions/user.action.dart';
+import 'package:sample_shop/store/models/auth/user_token.model.dart';
+
+Stream<void> authUserGetTokenEpic(
+    Stream<dynamic> actions, EpicStore<dynamic> store) {
+  return actions
+      .where((action) => action is GetUserTokenPending)
+      .switchMap((action) => Stream<UserTokenModel>.fromFuture(
+              authService.getTokenWithUserFirebaseId(action.uid, action.phone))
+          .switchMap((UserTokenModel result) => Stream<void>.fromFuture(
+              authTokenLocalStorage.addTokenToLocalStorage(result.token)))
+          .expand((value) => <dynamic>[GetUserProfilePending()]))
+      .handleError((e) => print('set token error: $e'));
+}
+
+Stream<void> unauthorizedUserEpic(
+    Stream<dynamic> actions, EpicStore<dynamic> store) {
+  return actions
+      .where((action) => action is UnauthorizedUser)
+      .switchMap((action) => Stream<void>.fromFuture(
+          authTokenLocalStorage.deleteTokenFromLocalStorage()))
+      .expand((element) => [ClearUserProfile()])
+      .handleError((e) => print('clear user data error: $e'));
+}
+
 //
 // // Проверка номера, отправка смс
 // Stream<void> authSendSmsEpic(

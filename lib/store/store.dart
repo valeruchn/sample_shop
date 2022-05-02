@@ -18,7 +18,7 @@ import 'package:sample_shop/store/models/user/user.model.dart';
 AppState initialState = AppState(
     // auth: AuthUserFromFirebase.init(),
     user: UserModel(
-      uid: '',
+      // uid: '',
       phone: '',
     ),
     products: <ProductModel>[],
@@ -30,17 +30,19 @@ final Store<AppState> store = Store<AppState>(appStateReducer,
     middleware: <
         dynamic Function(Store<AppState>, dynamic, dynamic Function(dynamic))>[
       EpicMiddleware<dynamic>(getUserProfileEpic),
-      EpicMiddleware<dynamic>(registrationUserEpic),
+      // EpicMiddleware<dynamic>(registrationUserEpic),
       EpicMiddleware<dynamic>(getProductsEpic),
       EpicMiddleware<dynamic>(getCartEpic),
       EpicMiddleware<dynamic>(addToCartEpic),
       EpicMiddleware<dynamic>(deleteFromCartEpic),
       EpicMiddleware<dynamic>(decrementItemFromCartEpic),
+      EpicMiddleware<dynamic>(authUserGetTokenEpic),
       // EpicMiddleware<dynamic>(authSendSmsEpic),
       // EpicMiddleware<dynamic>(authCheckSmsEpic),
       EpicMiddleware<dynamic>(updateUserProfileEpic),
       EpicMiddleware<dynamic>(createOrderEpic),
       EpicMiddleware<dynamic>(clearCartEpic),
       EpicMiddleware<dynamic>(getUserOrdersEpic),
-      EpicMiddleware<dynamic>(getCurrentOrderEpic)
+      EpicMiddleware<dynamic>(getCurrentOrderEpic),
+      EpicMiddleware<dynamic>(unauthorizedUserEpic)
     ]);
