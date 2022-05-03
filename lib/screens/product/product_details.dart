@@ -6,7 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:sample_shop/common/helpers/constants/font_settings.dart';
 import 'package:sample_shop/common/widgets/cart/modal_add_to_cart.dart';
-import 'package:sample_shop/store/models/product.model.dart';
+import 'package:sample_shop/store/models/products/product.model.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
 
 class ProductDetails extends StatelessWidget {

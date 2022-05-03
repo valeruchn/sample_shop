@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:sample_shop/common/widgets/menu/menu_drawer.dart';
-import 'package:sample_shop/common/widgets/menu/search_panel.dart';
+import 'package:sample_shop/common/widgets/home_page/menu_drawer.dart';
+import 'package:sample_shop/common/widgets/home_page/search_panel.dart';
 import 'package:sample_shop/screens/home_page/product_card.dart';
 
 // Project imports:

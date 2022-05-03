@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 // Project imports:
 import 'package:sample_shop/common/helpers/api/app_api.dart';
-import 'package:sample_shop/store/models/product.model.dart';
+import 'package:sample_shop/store/models/products/product.model.dart';
 
 Future<List<ProductModel>> getProducts({ String? category = 'all', String? search = '' }) async {
   try {

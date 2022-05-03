@@ -7,7 +7,7 @@ import 'package:sample_shop/common/services/products.service.dart';
 
 // Project imports:
 import 'package:sample_shop/store/actions/products.action.dart';
-import 'package:sample_shop/store/models/product.model.dart';
+import 'package:sample_shop/store/models/products/product.model.dart';
 
 Stream<void> getProductsEpic(
     Stream<dynamic> actions, EpicStore<dynamic> store) {

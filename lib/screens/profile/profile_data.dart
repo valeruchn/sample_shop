@@ -1,14 +1,11 @@
 // flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
-import 'package:sample_shop/store/actions/user.action.dart';
+import 'package:sample_shop/common/widgets/profile/profile_form_actions.dart';
+import 'package:sample_shop/common/widgets/profile/profile_form_field.dart';
 
 // Project imports:
 import 'package:sample_shop/store/models/user/user.model.dart';
-import 'package:sample_shop/store/reducers/reducer.dart';
 
 class ProfileData extends StatefulWidget {
   const ProfileData({Key? key, required this.user}) : super(key: key);
@@ -63,18 +60,6 @@ class _ProfileDataState extends State<ProfileData> {
     return dateString.isNotEmpty ? DateTime.parse(dateString).toUtc() : null;
   }
 
-  // Выбор даты рождения пикер
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: _dateParse(_birthDayController.text) ?? DateTime(2010),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2010));
-    if (picked != null) {
-      _birthDayController.text = DateFormat('yyyy-MM-dd').format(picked);
-    }
-  }
-
   // create userObject
   UserModel _createUserData() {
     return UserModel(
@@ -101,90 +86,44 @@ class _ProfileDataState extends State<ProfileData> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                if (!_isAllowEditing)
-                  TextButton(
-                      onPressed: _toggleAllowEditing,
-                      child: const Text('edit')),
-                if (_isAllowEditing)
-                  StoreConnector<AppState, dynamic>(
-                      converter: (store) => (UserModel user) =>
-                          store.dispatch(UpdateProfilePending(user: user)),
-                      builder: (context, updateProfile) => TextButton(
-                          onPressed: () {
-                            updateProfile(_createUserData());
-                            _toggleAllowEditing();
-                          },
-                          child: const Text('save'))),
-                if (_isAllowEditing)
-                  TextButton(
-                      onPressed: _cancelEditing, child: const Text('cancel')),
-              ],
-            ),
-            TextFormField(
-              controller: _nameController,
-              enabled: _isAllowEditing,
-              maxLength: 30,
-              decoration: InputDecoration(
-                  hintText: 'Имя',
-                  // не отображать счетчик количества символов
-                  counterText: '',
-                  suffixIcon: _isAllowEditing && _nameController.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: _nameController.clear,
-                        )
-                      : null),
-            ),
-            TextFormField(
-              enabled: false,
-              controller: _phoneController,
-              // initialValue: user.phone,
-              decoration: const InputDecoration(
-                hintText: 'Телефон',
+    return Container(
+      padding: const EdgeInsets.all(10.00),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
+          border: Border.all(width: 1.0, color: const Color(0xFF933D23))),
+      child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              // Actions
+              ProfileFormActions(
+                  isAllowEditing: _isAllowEditing,
+                  toggleAllowEditing: _toggleAllowEditing,
+                  createUserData: _createUserData,
+                  cancelEditing: _cancelEditing),
+              // Fields
+              ProfileFormField(
+                controller: _nameController,
+                isEditing: _isAllowEditing,
+                label: "Ім'я",
               ),
-            ),
-            TextFormField(
-              controller: _emailController,
-              enabled: _isAllowEditing,
-              maxLength: 30,
-              decoration: InputDecoration(
-                  hintText: 'Email',
-                  counterText: '',
-                  suffixIcon:
-                      _isAllowEditing && _emailController.text.isNotEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.clear),
-                              onPressed: _emailController.clear,
-                            )
-                          : null),
-            ),
-            TextFormField(
-              controller: _birthDayController,
-              enabled: _isAllowEditing,
-              readOnly: true,
-              decoration: InputDecoration(
-                  hintText: 'День рождения',
-                  suffixIcon:
-                      _isAllowEditing && _birthDayController.text.isNotEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.clear),
-                              onPressed: _birthDayController.clear,
-                            )
-                          : null),
-              onTap: () {
-                if (_isAllowEditing) {
-                  _selectDate(context);
-                }
-              },
-            )
-          ],
-        ));
+              ProfileFormField(
+                controller: _phoneController,
+                isEditing: false,
+                label: 'Телефон',
+              ),
+              ProfileFormField(
+                controller: _emailController,
+                isEditing: _isAllowEditing,
+                label: 'Email',
+              ),
+              ProfileFormField(
+                controller: _birthDayController,
+                isEditing: _isAllowEditing,
+                label: 'День народження',
+              ),
+            ],
+          )),
+    );
   }
 }

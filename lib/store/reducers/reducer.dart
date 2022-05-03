@@ -2,7 +2,7 @@
 import 'package:sample_shop/store/models/auth/firebase_auth_user.model.dart';
 import 'package:sample_shop/store/models/cart/cart.model.dart';
 import 'package:sample_shop/store/models/order/order.model.dart';
-import 'package:sample_shop/store/models/product.model.dart';
+import 'package:sample_shop/store/models/products/product.model.dart';
 import 'package:sample_shop/store/models/user/user.model.dart';
 import 'package:sample_shop/store/reducers/auth.reducer.dart';
 import 'package:sample_shop/store/reducers/cart.reducer.dart';

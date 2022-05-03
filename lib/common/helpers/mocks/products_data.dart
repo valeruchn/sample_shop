@@ -1,5 +1,5 @@
 // Package imports:
-import 'package:sample_shop/store/models/product.model.dart';
+import 'package:sample_shop/store/models/products/product.model.dart';
 
 // class ProductsData {
 //   final data = [

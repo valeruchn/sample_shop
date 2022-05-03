@@ -1,7 +1,7 @@
 // Package imports:
 import 'package:redux/redux.dart';
 // Project imports:
-import 'package:sample_shop/store/models/product.model.dart';
+import 'package:sample_shop/store/models/products/product.model.dart';
 import 'package:sample_shop/store/actions/products.action.dart';
 
 final Reducer<List<ProductModel>> productsReducer = combineReducers<

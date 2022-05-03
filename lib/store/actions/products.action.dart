@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:sample_shop/store/models/product.model.dart';
+import 'package:sample_shop/store/models/products/product.model.dart';
 
 class GetProductsPending {
   GetProductsPending({this.category, this.search});
