@@ -9,7 +9,6 @@ import 'package:sample_shop/store/epics/cart.epics.dart';
 import 'package:sample_shop/store/epics/order.epics.dart';
 import 'package:sample_shop/store/epics/products.epics.dart';
 import 'package:sample_shop/store/epics/user.epics.dart';
-import 'package:sample_shop/store/models/auth/firebase_auth_user.model.dart';
 import 'package:sample_shop/store/models/cart/cart.model.dart';
 import 'package:sample_shop/store/models/order/order.model.dart';
 import 'package:sample_shop/store/models/products/product.model.dart';
@@ -30,7 +29,6 @@ final Store<AppState> store = Store<AppState>(appStateReducer,
     middleware: <
         dynamic Function(Store<AppState>, dynamic, dynamic Function(dynamic))>[
       EpicMiddleware<dynamic>(getUserProfileEpic),
-      // EpicMiddleware<dynamic>(registrationUserEpic),
       EpicMiddleware<dynamic>(getProductsEpic),
       EpicMiddleware<dynamic>(getCartEpic),
       EpicMiddleware<dynamic>(addToCartEpic),
@@ -44,5 +42,8 @@ final Store<AppState> store = Store<AppState>(appStateReducer,
       EpicMiddleware<dynamic>(clearCartEpic),
       EpicMiddleware<dynamic>(getUserOrdersEpic),
       EpicMiddleware<dynamic>(getCurrentOrderEpic),
-      EpicMiddleware<dynamic>(unauthorizedUserEpic)
+      EpicMiddleware<dynamic>(unauthorizedUserEpic),
+      EpicMiddleware<dynamic>(addProductToFavouritesEpic),
+      EpicMiddleware<dynamic>(deleteProductFromFavouritesEpic),
+      EpicMiddleware<dynamic>(getFavouriteProductsEpic)
     ]);

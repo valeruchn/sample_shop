@@ -8,7 +8,8 @@ import 'package:sample_shop/store/models/user/user.model.dart';
 // Запрос профиля пользователя
 Future<UserModel> getUserProfile() async {
   try {
-    final Response<dynamic> res = await api.dio.get<dynamic>('/users/get-user-profile');
+    final Response<dynamic> res = await api.dio.get<dynamic>(
+        '/users/get-user-profile');
     final Map<String, dynamic> user = res.data as Map<String, dynamic>;
     return UserModel.fromJson(user);
   } catch (e) {
@@ -17,24 +18,12 @@ Future<UserModel> getUserProfile() async {
   return UserModel(phone: '');
 }
 
-// Создание учетной записи клиента
-// Future<UserModel> registrationUser(Map<String, dynamic> userData) async {
-//   try {
-//     final Response<dynamic> res = await api.dio.post<dynamic>('/users/create', data: userData);
-//     final Map<String, dynamic> user = res.data as Map<String, dynamic>;
-//     return UserModel.fromJson(user);
-//   } catch (e) {
-//     print(e);
-//   }
-//   return null as UserModel;
-// }
-
 // Обновление профиля пользователя
 Future<UserModel> updateUserProfile(Map<String, dynamic> userData) async {
   try {
-    final Response<dynamic> res = await api.dio.post<dynamic>('/users/update-user-profile', data: userData);
+    final Response<dynamic> res = await api.dio.post<dynamic>(
+        '/users/update-user-profile', data: userData);
     final Map<String, dynamic> user = res.data as Map<String, dynamic>;
-    print(user);
     return UserModel.fromJson(user);
   } catch (e) {
     print(e);
@@ -42,15 +31,42 @@ Future<UserModel> updateUserProfile(Map<String, dynamic> userData) async {
   return null as UserModel;
 }
 
-Future<List<UserModel>> getUsers() async {
+// Добавить товар в избранное в профиль клиента
+Future<List<String>> addProductToFavourites(String productId) async {
   try {
-    final Response<dynamic> res = await api.dio.get<dynamic>('/users');
-    final List<dynamic> users = res.data as List<dynamic>;
-    return users
-        .map<UserModel>((dynamic users) => UserModel.fromJson(users as Map<String, dynamic>))
-        .toList();
+    final Response<dynamic> res = await api.dio.post(
+        '/users/add-product-to-favorite/$productId');
+    final List<dynamic> favourites = res.data;
+    return favourites.map((id) => id as String).toList();
   } catch (e) {
-    print(e);
+    print('error add to favourites: $e');
+    return [];
   }
-  return [];
 }
+
+//  Удалить товар из избранного в профиле клиента
+Future<List<String>> removeProductFromFavourites(String productId) async {
+  try {
+    final Response<dynamic> res = await api.dio.post(
+        '/users/remove-product-from-favorite/$productId');
+    final List<dynamic> favourites = res.data;
+    return favourites.map((id) => id as String).toList();
+  } catch (e) {
+    print('error add to favourites: $e');
+    return [];
+  }
+}
+
+
+// Запрос пользователей(админ)
+// Future<List<UserModel>> getUsers() async {
+//   try {
+//     final Response<dynamic> res = await api.dio.get<dynamic>('/users');
+//     final List<dynamic> users = res.data as List<dynamic>;
+//     return users
+//         .map<UserModel>((dynamic users) => UserModel.fromJson(users as Map<String, dynamic>))
+//         .toList();
+//   } catch (e) {
+//     print(e);
+//   }
+//   return [];

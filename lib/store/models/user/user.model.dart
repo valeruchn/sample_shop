@@ -6,7 +6,7 @@ import 'package:sample_shop/store/models/user/address.model.dart';
 
 part 'user.model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserModel {
   UserModel({
     required this.phone,
@@ -15,6 +15,8 @@ class UserModel {
     this.birthdate,
     this.email,
     this.address,
+    this.favorits,
+    this.role
   });
 
   String phone;
@@ -23,6 +25,8 @@ class UserModel {
   DateTime? birthdate;
   String? email;
   AddressModel? address;
+  List<String>? favorits;
+  String? role;
 
   // конвертация из JSON в обьект
   factory UserModel.fromJson(Map<String, dynamic> json) =>

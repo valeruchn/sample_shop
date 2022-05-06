@@ -22,22 +22,30 @@ class UpdateProfileSuccess {
 
 class ClearUserProfile {}
 
+class AddProductToFavoritePending{
+  AddProductToFavoritePending({required this.id});
+  final String id;
+}
+
+class AddProductToFavoriteSuccess{
+  AddProductToFavoriteSuccess({required this.favorits});
+  List<String> favorits;
+}
+
+class DeleteProductFromFavouritesPending{
+  DeleteProductFromFavouritesPending({required this.id});
+  final String id;
+}
+
+class DeleteProductFromFavouritesSuccess{
+  DeleteProductFromFavouritesSuccess({required this.favorits});
+  List<String> favorits;
+}
+
 // class GetUsersPending {}
 //
 // class GetUsersSuccess {
 //   const GetUsersSuccess(this.users);
 //
 //   final List<UserModel> users;
-// }
-
-// class RegistrationUserPending {
-//   RegistrationUserPending({required this.user});
-//
-//   final UserModel user;
-// }
-//
-// class RegistrationUserSuccess {
-//   RegistrationUserSuccess({required this.user});
-//
-//   final UserModel user;
 // }

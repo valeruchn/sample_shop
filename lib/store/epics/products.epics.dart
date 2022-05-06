@@ -16,6 +16,7 @@ Stream<void> getProductsEpic(
       .switchMap((dynamic action) => Stream<List<ProductModel>>.fromFuture(
               getProducts(
                   category: action?.category ?? '',
+                  subcategory: action?.subcategory ?? '',
                   search: action?.search ?? '')
               // Future.delayed(const Duration(milliseconds: 500),
               //     () => ProductsData().products)
@@ -23,4 +24,17 @@ Stream<void> getProductsEpic(
           .expand<dynamic>((List<ProductModel> products) =>
               <dynamic>[GetProductsSuccess(products)])
           .handleError((dynamic e) => {print(e)}));
+}
+
+Stream<void> getFavouriteProductsEpic(
+    Stream<dynamic> actions, EpicStore<dynamic> store) {
+  return actions
+      .where((action) => action is GetFavouriteProductsPending)
+      .switchMap((action) =>
+          Stream<List<ProductModel>>.fromFuture(getFavouritesProducts())
+              .expand(
+                  (List<ProductModel> products) =>
+                      [GetFavouriteProductsSuccess(products: products)])
+              .handleError(
+                  (e) => {print('error get favourite products epic: $e')}));
 }

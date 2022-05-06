@@ -4,53 +4,78 @@ import 'package:flutter/material.dart';
 // Package imports
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:redux/redux.dart';
 
 // Flutter imports:
 import 'package:sample_shop/store/actions/products.action.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
+import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
+import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 
 class MenuDrawer extends StatelessWidget {
-  const MenuDrawer({Key? key}) : super(key: key);
+  const MenuDrawer({Key? key, required this.handleChangeTitle})
+      : super(key: key);
+  final void Function(String title) handleChangeTitle;
+
+  void _handleChangeFilter(Store<AppState> store) =>
+          (String category, String title, BuildContext context) {
+        handleChangeTitle(title);
+        if (category == 'favourites') {
+          store.dispatch(GetFavouriteProductsPending());
+        } else {
+          store.dispatch(GetProductsPending(category: category));
+        }
+        Navigator.pop(context);
+      };
 
   @override
   Widget build(BuildContext context) {
+
     return Drawer(
+      backgroundColor: kBackGroundColor,
       child: StoreConnector<AppState, dynamic>(
         // Запрос товаров по категории меню и закрытие drawer
-        converter: (store) => (String category) {
-          store.dispatch(GetProductsPending(category: category));
-          Navigator.pop(context);
-        },
+        converter: _handleChangeFilter,
         builder: (context, query) => ListView(
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+            Container(
+              margin:
+                  const EdgeInsets.only(top: 20.00, left: 20.00, bottom: 30.00),
+              child: const Text(
+                kMenuTitleText,
+                style: TextStyle(fontSize: 30.00),
               ),
-              child: Text(
-                'Меню',
-                style: Theme.of(context).textTheme.titleLarge,
+            ),
+            ListTile(
+              leading: const FaIcon(
+                FontAwesomeIcons.pizzaSlice,
+                color: kPrimaryColor,
               ),
+              title: const Text(kPizzaCategoryTitleText),
+              onTap: () => query('pizza', kPizzaCategoryTitleText, context),
             ),
             ListTile(
-              leading: const FaIcon(FontAwesomeIcons.pizzaSlice),
-              title: const Text('Пицца'),
-              onTap: () => query('pizza'),
+              leading: const Icon(Icons.support_sharp, color: kPrimaryColor),
+              title: const Text(kRollsCategoryTitleText),
+              onTap: () => query('rolls', kRollsCategoryTitleText, context),
             ),
             ListTile(
-              leading: const Icon(Icons.support_sharp),
-              title: const Text('Ролы'),
-              onTap: () => query('rolls'),
+              leading: const FaIcon(FontAwesomeIcons.kitchenSet,
+                  color: kPrimaryColor),
+              title: const Text(kSetsCategoryTitleText),
+              onTap: () => query('sets', kSetsCategoryTitleText, context),
             ),
             ListTile(
-              leading: const FaIcon(FontAwesomeIcons.kitchenSet),
-              title: const Text('Сеты'),
-              onTap: () => query('sets'),
+              leading: const FaIcon(FontAwesomeIcons.solidHeart,
+                  color: kPrimaryColor),
+              title: const Text(kFavouriteCategoryTitleText),
+              onTap: () =>
+                  query('favourites', kFavouriteCategoryTitleText, context),
             ),
             ListTile(
-              leading: const Icon(Icons.all_inclusive),
-              title: const Text('Все'),
-              onTap: () => query('all'),
+              leading: const Icon(Icons.all_inclusive, color: kPrimaryColor),
+              title: const Text('Всі'),
+              onTap: () => query('all', kHomeScreenTitleText, context),
             ),
           ],
         ),

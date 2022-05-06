@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'cart_item.model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class CartItemModel {
   @JsonKey(name: '_id')
   final String id;

@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'address.model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class AddressModel {
   AddressModel(
       {required this.street, required this.houseNumber, this.flat});

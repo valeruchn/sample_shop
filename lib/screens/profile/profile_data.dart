@@ -1,6 +1,7 @@
 // flutter imports:
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/common/widgets/profile/profile_form_actions.dart';
 import 'package:sample_shop/common/widgets/profile/profile_form_field.dart';
 
@@ -90,7 +91,7 @@ class _ProfileDataState extends State<ProfileData> {
       padding: const EdgeInsets.all(10.00),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(width: 1.0, color: const Color(0xFF933D23))),
+          border: Border.all(width: 1.0, color: kDefaultBorderColor)),
       child: Form(
           key: _formKey,
           child: Column(

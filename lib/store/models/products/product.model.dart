@@ -3,8 +3,22 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'product.model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ProductModel {
+
+  ProductModel({
+    required this.id,
+    required this.title,
+    required this.property,
+    required this.weight,
+    required this.description,
+    required this.category,
+    this.subcategory,
+    required this.price,
+    required this.photo
+  });
+
+
   // когда в JSON другое имя свойства
   @JsonKey(name: '_id')
   final String id;
@@ -14,18 +28,10 @@ class ProductModel {
   final String photo;
   final String description;
   final String category;
+  final String? subcategory;
   final int price;
 
-  ProductModel({
-      required this.id,
-      required this.title,
-      required this.property,
-      required this.weight,
-      required this.description,
-      required this.category,
-      required this.price,
-      required this.photo
-    });
+
 
   // конвертация из JSON в обьект
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

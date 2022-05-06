@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/store/actions/order.action.dart';
 
 // Project imports:
@@ -38,7 +39,7 @@ class OrdersLog extends StatelessWidget {
         builder: (context, orders) => Scaffold(
               appBar: AppBar(title: const Text('Замовлення'),),
               body: Container(
-                color: const Color(0xFF2A353A),
+                color: kBackGroundColor,
                 width: double.infinity,
                 padding: const EdgeInsets.all(10.0),
                 child: ListView(
@@ -53,7 +54,7 @@ class OrdersLog extends StatelessWidget {
                                     const EdgeInsets.symmetric(vertical: 10.00),
                                 padding: const EdgeInsets.all(10.0),
                                 decoration: BoxDecoration(
-                                    color: const Color(0xFF252F33),
+                                    color: kItemBackgroundColor,
                                     // border: Border.all(color: Colors.white),
                                     borderRadius: BorderRadius.circular(15.0),
                                     boxShadow: const [

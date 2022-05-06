@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:intl/intl.dart';
+import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 
 class ProfileFormField extends StatelessWidget {
   const ProfileFormField(
@@ -38,18 +39,18 @@ class ProfileFormField extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: TextFormField(
         readOnly: label == 'День народження',
-        style: const TextStyle(color: Color(0xFFEAEAEA)),
+        style: const TextStyle(color: kDefaultTextColor),
         controller: controller,
         enabled: isEditing,
         maxLength: 30,
         decoration: InputDecoration(
             labelText: label,
-            labelStyle: const TextStyle(color: Color(0xFFB6B6B6)),
+            labelStyle: const TextStyle(color: kDefaultLabelTextColor),
             border: const OutlineInputBorder(),
             disabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF933D23))),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+                borderSide: BorderSide(color: kDefaultBorderColor)),
+            enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: kPrimaryColor)),
             // не отображать счетчик количества символов
             counterText: '',
             // todo доделать обновление состояния при редактировании поля

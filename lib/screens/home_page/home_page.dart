@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:redux/redux.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 import 'package:sample_shop/common/widgets/home_page/menu_drawer.dart';
 import 'package:sample_shop/common/widgets/home_page/search_panel.dart';
 import 'package:sample_shop/screens/home_page/product_card.dart';
+import 'package:sample_shop/store/actions/products.action.dart';
 
 // Project imports:
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -24,6 +28,41 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _isOpenSearch = false;
 
+  // Заголовок екрана
+  String _selectedTitle = kHomeScreenTitleText;
+
+  // Выбор фавориты или все
+  void Function() _handleSelectFavourites(Store<AppState> store) => () {
+        if (_selectedTitle != kFavouriteCategoryTitleText) {
+          handleChangeTitle(kFavouriteCategoryTitleText);
+          store.dispatch(GetFavouriteProductsPending());
+        } else {
+          handleChangeTitle(kHomeScreenTitleText);
+          store.dispatch(GetProductsPending());
+        }
+      };
+
+  // изменение заголовка екрана
+  void handleChangeTitle(String title) {
+    setState(() {
+      _selectedTitle = title;
+    });
+  }
+
+  // Вывод иконки фаворит
+  FaIcon favouriteIcon() {
+    if (_selectedTitle == kFavouriteCategoryTitleText) {
+      return const FaIcon(
+        FontAwesomeIcons.solidHeart,
+        size: 30.00,
+      );
+    } else {
+      return const FaIcon(
+        FontAwesomeIcons.heart,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -34,9 +73,12 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: const Text('Home'),
-          backgroundColor: const Color(0xFF313E44),
+          title: Text(_selectedTitle),
           actions: [
+            StoreConnector<AppState, void Function()>(
+                converter: _handleSelectFavourites,
+                builder: (context, handleSelectFavourite) => IconButton(
+                    icon: favouriteIcon(), onPressed: handleSelectFavourite)),
             IconButton(
                 onPressed: () {
                   setState(() {
@@ -65,49 +107,44 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        endDrawer: const MenuDrawer(),
+        endDrawer: MenuDrawer(handleChangeTitle: handleChangeTitle),
         // Для получения данных из стейт
-        body: Container(
-          color: const Color(0xFF2A353A),
-          child: StoreConnector<AppState, AppState>(
-            converter: (store) => store.state,
-            builder: (context, state) => Column(
-              children: [
-                if (_isOpenSearch) const SearchPanel(),
-                Expanded(
-                  child: GridView.count(
-                    // Отключает фокус и клавиатуру при скроле
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
-                    primary: false,
-                    padding: const EdgeInsets.all(7),
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 2,
-                    // соотношение сторон ячеек грид сетки
-                    childAspectRatio: (1 / 1.5),
-                    children: state.products.isNotEmpty
-                        ? [
-                            ...state.products
-                                .map((product) => Container(
-                                      child: ProductCard(
-                                        id: product.id,
-                                        title: product.title,
-                                        property: product.property,
-                                        weight: product.weight,
-                                        description: product.description,
-                                        photo: product.photo,
-                                        category: product.category,
-                                        price: product.price,
-                                      ),
-                                    ))
-                                .toList(),
-                          ]
-                        : [],
-                  ),
+        body: StoreConnector<AppState, AppState>(
+          converter: (store) => store.state,
+          builder: (context, state) => Column(
+            children: [
+              if (_isOpenSearch) const SearchPanel(),
+              Expanded(
+                child: GridView.count(
+                  // Отключает фокус и клавиатуру при скроле
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  primary: false,
+                  padding: const EdgeInsets.all(7),
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  // соотношение сторон ячеек грид сетки
+                  childAspectRatio: (1 / 1.5),
+                  children: state.products.isNotEmpty
+                      ? [
+                          ...state.products
+                              .map((product) => ProductCard(
+                                    id: product.id,
+                                    title: product.title,
+                                    property: product.property,
+                                    weight: product.weight,
+                                    description: product.description,
+                                    photo: product.photo,
+                                    category: product.category,
+                                    price: product.price,
+                                  ))
+                              .toList(),
+                        ]
+                      : [],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -1,17 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-//Project imports:
+// Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:routemaster/routemaster.dart';
 
-// Project imports:
-import 'package:sample_shop/screens/profile/profile.dart';
-import 'package:sample_shop/store/actions/user.action.dart';
-import 'package:sample_shop/store/models/user/user.model.dart';
-import 'package:sample_shop/store/reducers/reducer.dart';
+//Project imports:
+import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 
 class Auth extends StatefulWidget {
   const Auth({Key? key}) : super(key: key);
@@ -35,7 +31,7 @@ class _AuthState extends State<Auth> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Авторизация',
+          'Авторизація',
           textAlign: TextAlign.center,
         ),
       ),
@@ -50,17 +46,22 @@ class _AuthState extends State<Auth> {
               Container(
                 margin: const EdgeInsets.only(bottom: 10),
                 child: const Text(
-                    'Для входа или регистрации введите номер телефона',
+                    'Для входу або реєстрації введіть номер телефону',
                     textAlign: TextAlign.center,
                     style:
                         TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)),
               ),
               IntlPhoneField(
                   autovalidateMode: AutovalidateMode.disabled,
+                  style: const TextStyle(color: kDefaultTextColor),
                   decoration: const InputDecoration(
-                    labelText: 'Номер телефона',
+                    labelText: 'Номер телефону',
+                    labelStyle: TextStyle(color: kDefaultLabelTextColor),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: kDefaultBorderColor),
                     ),
                     counterText: '',
                   ),
@@ -68,7 +69,7 @@ class _AuthState extends State<Auth> {
                   onChanged: (phone) {
                     _phoneController = phone.completeNumber;
                   },
-                  invalidNumberMessage: 'Некорректный номер телефона'),
+                  invalidNumberMessage: 'Некорректний номер телефону'),
               Row(
                 children: [
                   Checkbox(
@@ -86,14 +87,14 @@ class _AuthState extends State<Auth> {
                   ),
                   const Flexible(
                       child: Text(
-                          'Нажимая кнопку отправить я принимаю условия политики конфиденциальности'))
+                          'Натискаючи кнопку відправити я приймаю умови політики конфіденційності'))
                 ],
               ),
               if (_errorAgreement == true)
                 Container(
                   margin: const EdgeInsets.only(left: 11.0),
                   child: const Text(
-                    'Примите условия',
+                    'Прийміть умови',
                     style: TextStyle(
                       color: Color(0xFFD84B4B),
                       fontSize: 12.0,
@@ -117,7 +118,7 @@ class _AuthState extends State<Auth> {
                       });
                     }
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Відправити'),
                 ),
               ),
             ],
@@ -173,7 +174,7 @@ class _AuthState extends State<Auth> {
         // закрывает ли диалоговое окно нажатие на барьер
         // barrierDismissible: false,
         builder: (context) => AlertDialog(
-              title: const Text("Enter SMS Code"),
+              title: const Text("Введіть SMS код"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -184,31 +185,33 @@ class _AuthState extends State<Auth> {
                 ],
               ),
               actions: <Widget>[
-                 OutlinedButton(
-                    child: const Text("Отправить"),
-                    onPressed: () {
-                      FirebaseAuth auth = FirebaseAuth.instance;
-                      String _smsCode = _codeController.text.trim();
-                      // отовим обьект для авторизации
-                      PhoneAuthCredential _credential =
-                          PhoneAuthProvider.credential(
-                              verificationId: verificationId,
-                              smsCode: _smsCode);
-                      // Закрываем форму
-                      _codeController.clear();
-                      auth.signInWithCredential(_credential).then((result) {
-                        if (result.user != null) {
-                          // Закрываем модальное окно, удаляем маршрут Auth и пушим маршрут
-                          // Profile. При нажатии назад откроется Settings
-                          // Оператор .. вызов нескольких методов одного и того же объекта
-                          // .. помогает вызывать ряд методов, которые не обязательно возвращают объект.
-                          Routemaster.of(context)..pop()..pop()..push('/profile');
-                        }
-                      }).catchError((e) {
-                        print('error: $e');
-                      });
-                    },
-                  ),
+                OutlinedButton(
+                  child: const Text("Відправити"),
+                  onPressed: () {
+                    FirebaseAuth auth = FirebaseAuth.instance;
+                    String _smsCode = _codeController.text.trim();
+                    // отовим обьект для авторизации
+                    PhoneAuthCredential _credential =
+                        PhoneAuthProvider.credential(
+                            verificationId: verificationId, smsCode: _smsCode);
+                    // Закрываем форму
+                    _codeController.clear();
+                    auth.signInWithCredential(_credential).then((result) {
+                      if (result.user != null) {
+                        // Закрываем модальное окно, удаляем маршрут Auth и пушим маршрут
+                        // Profile. При нажатии назад откроется Settings
+                        // Оператор .. вызов нескольких методов одного и того же объекта
+                        // .. помогает вызывать ряд методов, которые не обязательно возвращают объект.
+                        Routemaster.of(context)
+                          ..pop()
+                          ..pop()
+                          ..push('/profile');
+                      }
+                    }).catchError((e) {
+                      print('error: $e');
+                    });
+                  },
+                ),
               ],
             ));
   }

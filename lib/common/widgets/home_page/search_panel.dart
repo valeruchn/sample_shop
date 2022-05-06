@@ -30,7 +30,7 @@ class _SearchPanelState extends State<SearchPanel> {
         child: TextField(
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-              label: const Text('Поиск'),
+              label: const Text('Пошук'),
               labelStyle: TextStyle(color: Theme.of(context).primaryColor),
               border: const OutlineInputBorder(),
               enabledBorder: OutlineInputBorder(
