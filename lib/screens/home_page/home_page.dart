@@ -83,6 +83,12 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   setState(() {
                     _isOpenSearch = !_isOpenSearch;
+                    // Изменение заголовка
+                    if(_isOpenSearch){
+                      _selectedTitle = kSearchPanelLabelText;
+                    } else {
+                      _selectedTitle = kHomeScreenTitleText;
+                    }
                   });
                 },
                 icon: const Icon(Icons.search)),

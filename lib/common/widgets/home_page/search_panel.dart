@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 import 'package:sample_shop/common/helpers/utils/debouncer.dart';
 import 'package:sample_shop/store/actions/products.action.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -23,6 +24,7 @@ class _SearchPanelState extends State<SearchPanel> {
       // запрашиваем продукты при инициализации виджета, для
       // корректной работы при открытии и закрытии поиска
       onInit: (store) => store.dispatch(GetProductsPending()),
+      onDispose: (store) => store.dispatch(GetProductsPending()),
       converter: (store) => (String searchText) =>
           store.dispatch(GetProductsPending(search: searchText)),
       builder: (context, search) => Container(
@@ -30,7 +32,7 @@ class _SearchPanelState extends State<SearchPanel> {
         child: TextField(
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-              label: const Text('Пошук'),
+              label: const Text(kSearchPanelLabelText),
               labelStyle: TextStyle(color: Theme.of(context).primaryColor),
               border: const OutlineInputBorder(),
               enabledBorder: OutlineInputBorder(
