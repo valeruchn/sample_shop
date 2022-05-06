@@ -4,15 +4,13 @@ import 'package:dio/dio.dart';
 // Project imports:
 import 'package:sample_shop/common/helpers/api/app_api.dart';
 import 'package:sample_shop/store/models/cart/cart.model.dart';
-import 'package:sample_shop/store/models/cart/cart_item.model.dart';
 import 'package:sample_shop/store/models/cart/cart_query.model.dart';
 
 Future<CartModel> getCartItems(List<CartQueryModel> cart) async {
   try {
-    final Response<dynamic> res = await api.dio
+    final Response res = await api.dio
         // в параметрах конвертируем запрос в json
-        .post<dynamic>('/products/cart',
-            data: <String, dynamic>{'payload': cart});
+        .post('/products/cart', data: <String, dynamic>{'payload': cart});
     final Map<String, dynamic> result = res.data;
     return CartModel.fromJson(result);
   } catch (e) {

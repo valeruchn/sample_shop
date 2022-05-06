@@ -9,11 +9,9 @@ class SearchSubCategoryModel {
   SearchSubCategoryModel(
       {required this.title,
       required this.category,
-      required this.subcategory,
-      /*required this.subCatTitle*/});
+      required this.subcategory});
 
   final String category;
   final String title;
   final String subcategory;
-  // final String subCatTitle;
 }

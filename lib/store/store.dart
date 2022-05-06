@@ -13,6 +13,9 @@ import 'package:sample_shop/store/models/cart/cart.model.dart';
 import 'package:sample_shop/store/models/order/order.model.dart';
 import 'package:sample_shop/store/models/products/product.model.dart';
 import 'package:sample_shop/store/models/user/user.model.dart';
+import 'package:sample_shop/common/helpers/constants/text_constants.dart';
+import 'package:sample_shop/store/models/categories/category.model.dart';
+import 'package:sample_shop/store/epics/categories.epics.dart';
 
 AppState initialState = AppState(
     // auth: AuthUserFromFirebase.init(),
@@ -21,8 +24,10 @@ AppState initialState = AppState(
       phone: '',
     ),
     products: <ProductModel>[],
+    categories: <CategoryModel>[],
     cart: CartModel(cartItems: [], totalPrice: 0),
-    orders: OrderModel());
+    orders: OrderModel(),
+    homePageTitle: kHomeScreenTitleText);
 
 final Store<AppState> store = Store<AppState>(appStateReducer,
     initialState: initialState,
@@ -45,5 +50,6 @@ final Store<AppState> store = Store<AppState>(appStateReducer,
       EpicMiddleware<dynamic>(unauthorizedUserEpic),
       EpicMiddleware<dynamic>(addProductToFavouritesEpic),
       EpicMiddleware<dynamic>(deleteProductFromFavouritesEpic),
-      EpicMiddleware<dynamic>(getFavouriteProductsEpic)
+      EpicMiddleware<dynamic>(getFavouriteProductsEpic),
+      EpicMiddleware<dynamic>(getCategoriesEpic)
     ]);
