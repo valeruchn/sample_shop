@@ -32,15 +32,17 @@ class _HomePageState extends State<HomePage> {
   String _selectedTitle = kHomeScreenTitleText;
 
   // Выбор фавориты или все
-  void Function() _handleSelectFavourites(Store<AppState> store) => () {
-        if (_selectedTitle != kFavouriteCategoryTitleText) {
-          handleChangeTitle(kFavouriteCategoryTitleText);
-          store.dispatch(GetFavouriteProductsPending());
-        } else {
-          handleChangeTitle(kHomeScreenTitleText);
-          store.dispatch(GetProductsPending());
-        }
-      };
+  Map<String, dynamic> _handleSelectFavourites(Store<AppState> store) {
+    void action() {
+      if (store.state.homePageTitle != kFavouriteCategoryTitleText) {
+        store.dispatch(GetFavouriteProductsPending());
+      } else {
+        store.dispatch(GetProductsPending());
+      }
+    }
+
+    return {'title': store.state.homePageTitle, 'action': action};
+  }
 
   // изменение заголовка екрана
   void handleChangeTitle(String title) {
@@ -50,8 +52,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Вывод иконки фаворит
-  FaIcon favouriteIcon() {
-    if (_selectedTitle == kFavouriteCategoryTitleText) {
+  FaIcon favouriteIcon(String selectedTitle) {
+    if (selectedTitle == kFavouriteCategoryTitleText) {
       return const FaIcon(
         FontAwesomeIcons.solidHeart,
         size: 30.00,
@@ -73,22 +75,20 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text(_selectedTitle),
+          title: StoreConnector<AppState, String>(
+            converter: (store) => store.state.homePageTitle,
+            builder: (context, title) => Text(title),
+          ),
           actions: [
-            StoreConnector<AppState, void Function()>(
+            StoreConnector<AppState, Map<String, dynamic>>(
                 converter: _handleSelectFavourites,
-                builder: (context, handleSelectFavourite) => IconButton(
-                    icon: favouriteIcon(), onPressed: handleSelectFavourite)),
+                builder: (context, handlerMap) => IconButton(
+                    icon: favouriteIcon(handlerMap['title']),
+                    onPressed: handlerMap['action'])),
             IconButton(
                 onPressed: () {
                   setState(() {
                     _isOpenSearch = !_isOpenSearch;
-                    // Изменение заголовка
-                    if(_isOpenSearch){
-                      _selectedTitle = kSearchPanelLabelText;
-                    } else {
-                      _selectedTitle = kHomeScreenTitleText;
-                    }
                   });
                 },
                 icon: const Icon(Icons.search)),
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        endDrawer: MenuDrawer(handleChangeTitle: handleChangeTitle),
+        endDrawer: const MenuDrawer(),
         // Для получения данных из стейт
         body: StoreConnector<AppState, AppState>(
           converter: (store) => store.state,

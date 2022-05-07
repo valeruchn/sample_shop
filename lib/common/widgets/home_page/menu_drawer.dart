@@ -6,36 +6,28 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:sample_shop/common/helpers/constants/search_category_object_constants.dart';
+import 'package:sample_shop/common/widgets/home_page/category_item.dart';
+import 'package:sample_shop/store/actions/categories.action.dart';
 
 // Flutter imports:
 import 'package:sample_shop/store/actions/products.action.dart';
+import 'package:sample_shop/store/models/categories/category.model.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 
 class MenuDrawer extends StatefulWidget {
-  const MenuDrawer({Key? key, required this.handleChangeTitle})
+  const MenuDrawer({Key? key})
       : super(key: key);
-  final void Function(String title) handleChangeTitle;
 
   @override
   State<MenuDrawer> createState() => _MenuDrawerState();
 }
 
 class _MenuDrawerState extends State<MenuDrawer> {
-  bool _isOpenSubCatMenu = false;
-
-  // Открыть подкатегории
-  void _toggleSubCatMenu() {
-    setState(() {
-      _isOpenSubCatMenu = !_isOpenSubCatMenu;
-    });
-  }
-
   // Переключение фильтра
   void _handleChangeFilter(Store<AppState> store) => (String category,
           String title, BuildContext context, String? subcategory) {
-        widget.handleChangeTitle(title);
         if (category == kFavouriteCategorySearch.category) {
           store.dispatch(GetFavouriteProductsPending());
         } else {
@@ -62,59 +54,16 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 style: TextStyle(fontSize: 30.00),
               ),
             ),
-            ListTile(
-              leading: const FaIcon(
-                FontAwesomeIcons.pizzaSlice,
-                color: kPrimaryColor,
-              ),
-              title: Text(kPizzaCategorySearch.title),
-              onTap: () => query(kPizzaCategorySearch.category,
-                  kPizzaCategorySearch.title, context, null),
-            ),
-            // Выпадающее меню
-            ListTile(
-                leading: const Icon(Icons.support_sharp, color: kPrimaryColor),
-                title: const Text(kRollsCategoryTitleText),
-                onTap: _toggleSubCatMenu),
-            if (_isOpenSubCatMenu)
-              Column(
+            StoreConnector<AppState, List<CategoryModel>>(
+              onInit: (store) => store.dispatch(GetCategoriesPending()),
+              converter: (store) => store.state.categories,
+              builder: (context, categories) => Column(
                 children: [
-                  const Divider(
-                    color: kDefaultBorderColor,
-                    height: 0.00,
-                  ),
-                  ...kDropDownButtonSubcategoryList
-                      .map((subcategory) => ListTile(
-                          leading: Container(
-                            margin:
-                                const EdgeInsets.only(left: 15.00, top: 5.5),
-                            child: const FaIcon(
-                              FontAwesomeIcons.circleDot,
-                              size: 12.00,
-                              color: kPrimaryColor,
-                            ),
-                          ),
-                          title: Container(
-                              margin: const EdgeInsets.only(left: 10.00),
-                              child: Text(subcategory.title)),
-                          onTap: () => query(
-                              subcategory.category,
-                              subcategory.title,
-                              context,
-                              subcategory.subcategory)))
-                      .toList(),
-                  const Divider(
-                    color: kDefaultBorderColor,
-                    height: 0.00,
-                  ),
+                  ...categories
+                      .map((category) => CategoryItem(category: category))
+                      .toList()
                 ],
               ),
-            ListTile(
-              leading: const FaIcon(FontAwesomeIcons.kitchenSet,
-                  color: kPrimaryColor),
-              title: Text(kSetsCategorySearch.title),
-              onTap: () => query(kSetsCategorySearch.category,
-                  kSetsCategorySearch.title, context, null),
             ),
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.solidHeart,
@@ -126,8 +75,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
             ListTile(
               leading: const Icon(Icons.all_inclusive, color: kPrimaryColor),
               title: Text(kAllCategorySearch.title),
-              onTap: () => query(
-                  kAllCategorySearch.category, kHomeScreenTitleText, context, null),
+              onTap: () => query(kAllCategorySearch.category,
+                  kHomeScreenTitleText, context, null),
             ),
           ],
         ),

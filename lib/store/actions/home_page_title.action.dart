@@ -1,5 +1,8 @@
 class SetHomePageTitleSuccess {
-  SetHomePageTitleSuccess({required this.homePageTitle});
+  SetHomePageTitleSuccess({this.category, this.subcategory, this.search, this.favourites});
 
-  String homePageTitle;
+  String? category;
+  String? subcategory;
+  String? search;
+  String? favourites;
 }
