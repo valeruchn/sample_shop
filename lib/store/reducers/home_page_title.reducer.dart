@@ -13,12 +13,10 @@ final Reducer<String> homePageTitleReducer =
 String _setHomePageTitle(String state, SetHomePageTitleSuccess action) {
   if (action.search != null) {
     return kSearchPanelLabelText;
-  } else if (action.favourites != null) {
-    return action.favourites!;
-  } else if (action.category != null && action.subcategory == null) {
+  } else if (action.favourites) {
+    return kFavouriteCategoryTitleText;
+  } else if (action.category != null) {
     return action.category!;
-  } else if (action.category != null && action.subcategory != null) {
-    return action.subcategory!;
   } else {
     return kHomeScreenTitleText;
   }

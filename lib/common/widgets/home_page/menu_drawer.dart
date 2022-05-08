@@ -26,13 +26,12 @@ class MenuDrawer extends StatefulWidget {
 
 class _MenuDrawerState extends State<MenuDrawer> {
   // Переключение фильтра
-  void _handleChangeFilter(Store<AppState> store) => (String category,
-          String title, BuildContext context, String? subcategory) {
+  void _handleChangeFilter(Store<AppState> store) => (String? category) {
         if (category == kFavouriteCategorySearch.category) {
           store.dispatch(GetFavouriteProductsPending());
         } else {
           store.dispatch(
-              GetProductsPending(category: category, subcategory: subcategory));
+              GetProductsPending());
         }
         Navigator.pop(context);
       };
@@ -69,14 +68,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
               leading: const FaIcon(FontAwesomeIcons.solidHeart,
                   color: kPrimaryColor),
               title: Text(kFavouriteCategorySearch.title),
-              onTap: () => query(kFavouriteCategorySearch.category,
-                  kFavouriteCategorySearch.title, context, null),
+              onTap: () => query(kFavouriteCategorySearch.category),
             ),
             ListTile(
               leading: const Icon(Icons.all_inclusive, color: kPrimaryColor),
-              title: Text(kAllCategorySearch.title),
-              onTap: () => query(kAllCategorySearch.category,
-                  kHomeScreenTitleText, context, null),
+              title: const Text(kAllCategoryTitleText),
+              onTap: () => query(null),
             ),
           ],
         ),

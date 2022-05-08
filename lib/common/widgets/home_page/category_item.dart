@@ -25,7 +25,7 @@ class _CategoryItemState extends State<CategoryItem> {
   bool _isOpenSubCatMenu = false;
 
   // Обработка нажатия на категорию
-  // Аргументы: категория(обьект CategoryModel), функция, полученная из toreConverter
+  // Аргументы: категория(обьект CategoryModel), функция, полученная из storeConverter
   // и подкатегория
   void _handleCategorySelect(
       CategoryModel catData,
@@ -37,7 +37,7 @@ class _CategoryItemState extends State<CategoryItem> {
       _toggleSubCatMenu();
     } else {
       // иначе запрашиваем данные с api
-      action(category: catData.category, subcategory: subcategory ?? '');
+      action(category: catData.category, subcategory: subcategory);
     }
   }
 
