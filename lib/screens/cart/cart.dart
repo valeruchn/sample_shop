@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 import 'package:sample_shop/screens/cart/cart_item.dart';
@@ -55,11 +56,7 @@ class Cart extends StatelessWidget {
                               width: double.infinity,
                               child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Order()));
+                                    Routemaster.of(context).push('/order-confirmation');
                                   },
                                   child: const Text(kApplyOrderText)),
                             )

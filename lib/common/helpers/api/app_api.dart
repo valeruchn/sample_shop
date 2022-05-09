@@ -3,9 +3,12 @@ import 'dart:io';
 
 // Package imports:
 import 'package:dio/dio.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 // Project imports:
 import 'package:sample_shop/common/localStorage/auth_token_storage_options.dart';
+import 'package:sample_shop/store/actions/auth.action.dart';
+import 'package:sample_shop/store/store.dart';
 
 final api = AppApi(authTokenLocalStorage);
 
@@ -18,7 +21,19 @@ class AppApi {
         options.headers["Authorization"] = 'Bearer $token';
       }
       return handler.next(options);
-    }));
+    },
+      onError: (DioError e, ErrorInterceptorHandler handler) async {
+        final bool isInternetConnection =
+        await InternetConnectionChecker().hasConnection;
+        if (!isInternetConnection) {
+          print('dioerror: No internet connection.');
+        }
+        if (e.response?.statusCode == 401){
+          print('dioerror: Not authorised');
+          store.dispatch(UnauthorizedUser());
+        }
+      }
+    ));
   }
 
   final AuthTokenLocalStorage authTokenLocalStorage;

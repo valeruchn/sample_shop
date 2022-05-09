@@ -31,9 +31,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Store<AppState> store;
-
   const MyApp({required this.store});
+
+  final Store<AppState> store;
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,15 @@ class MyApp extends StatelessWidget {
     _checkAuth();
     return StoreProvider(
       store: store,
-      child: MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: appTheme,
-        routerDelegate: RoutemasterDelegate(routesBuilder: (context) => routes),
-        routeInformationParser: const RoutemasterParser(),
+      child: StoreConnector<AppState, bool>(
+        converter: (store) => store.state.user.phone.isNotEmpty,
+        builder: (context, isAuth) => MaterialApp.router(
+          title: 'Flutter Demo',
+          theme: appTheme,
+          routerDelegate: RoutemasterDelegate(
+              routesBuilder: (context) => createRoutes(isAuth)),
+          routeInformationParser: const RoutemasterParser(),
+        ),
       ),
     );
   }

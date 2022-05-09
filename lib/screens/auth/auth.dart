@@ -205,7 +205,7 @@ class _AuthState extends State<Auth> {
                         Routemaster.of(context)
                           ..pop()
                           ..pop()
-                          ..push('/profile');
+                          /*..push('/profile')*/;
                       }
                     }).catchError((e) {
                       print('error: $e');
