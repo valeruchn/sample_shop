@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
+import 'package:sample_shop/store/actions/auth.action.dart';
 
 // Project imports:
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -29,7 +30,15 @@ AppState initialState = AppState(
     orders: OrderModel(),
     homePageTitle: kHomeScreenTitleText);
 
-final Store<AppState> store = Store<AppState>(appStateReducer,
+AppState rootReducer (AppState state, dynamic action) {
+      if (action is UnauthorizedUser) {
+            return appStateReducer(initialState, action);
+      } else {
+            return appStateReducer(state, action);
+      }
+}
+
+final Store<AppState> store = Store<AppState>(rootReducer,
     initialState: initialState,
     middleware: <
         dynamic Function(Store<AppState>, dynamic, dynamic Function(dynamic))>[

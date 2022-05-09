@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:sample_shop/store/actions/cart.action.dart';
 
 // Project imports:
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -106,6 +107,13 @@ class _HomePageState extends State<HomePage> {
         endDrawer: const MenuDrawer(),
         // Для получения данных из стейт
         body: StoreConnector<AppState, AppState>(
+          onInit: (store) {
+            store.dispatch(GetProductsPending());
+            // Запрос продуктов
+            store.dispatch(GetProductsPending());
+            // Запрос корзины
+            store.dispatch(GetCartPending());
+          },
           converter: (store) => store.state,
           builder: (context, state) => Column(
             children: [

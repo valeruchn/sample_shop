@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:routemaster/routemaster.dart';
+
+// Project imports:
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 import 'package:sample_shop/screens/cart/cart_item.dart';
-
-// Project imports:
-import 'package:sample_shop/screens/order_confirmation/order_confirmation.dart';
 import 'package:sample_shop/store/actions/cart.action.dart';
 import 'package:sample_shop/store/models/cart/cart_item.model.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -56,7 +55,8 @@ class Cart extends StatelessWidget {
                               width: double.infinity,
                               child: ElevatedButton(
                                   onPressed: () {
-                                    Routemaster.of(context).push('/order-confirmation');
+                                    Routemaster.of(context)
+                                        .push('/order-confirmation');
                                   },
                                   child: const Text(kApplyOrderText)),
                             )

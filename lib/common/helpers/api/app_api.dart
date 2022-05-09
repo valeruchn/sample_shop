@@ -4,6 +4,7 @@ import 'dart:io';
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:routemaster/routemaster.dart';
 
 // Project imports:
 import 'package:sample_shop/common/localStorage/auth_token_storage_options.dart';
@@ -30,7 +31,6 @@ class AppApi {
         }
         if (e.response?.statusCode == 401){
           print('dioerror: Not authorised');
-          store.dispatch(UnauthorizedUser());
         }
       }
     ));

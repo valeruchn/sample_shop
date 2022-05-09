@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:intl/intl.dart';
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
+import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 
 class ProfileFormField extends StatelessWidget {
   const ProfileFormField(
@@ -38,7 +39,7 @@ class ProfileFormField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: TextFormField(
-        readOnly: label == 'День народження',
+        readOnly: label == kBirthDayFieldLabelText,
         style: const TextStyle(color: kDefaultTextColor),
         controller: controller,
         enabled: isEditing,
@@ -61,7 +62,7 @@ class ProfileFormField extends StatelessWidget {
                     onPressed: controller.clear,
                   )
                 : null),
-        onTap: label == 'День народження'
+        onTap: label == kBirthDayFieldLabelText
             ? () {
                 if (isEditing) {
                   _selectDate(context);

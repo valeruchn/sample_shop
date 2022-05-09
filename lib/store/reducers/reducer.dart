@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:sample_shop/store/actions/auth.action.dart';
 import 'package:sample_shop/store/models/cart/cart.model.dart';
 import 'package:sample_shop/store/models/categories/category.model.dart';
 import 'package:sample_shop/store/models/order/order.model.dart';
