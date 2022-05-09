@@ -31,6 +31,9 @@ class _HomePageState extends State<HomePage> {
 
   // Выбор фавориты или все
   Map<String, dynamic> _handleSelectFavourites(Store<AppState> store) {
+    // Если пользователь в системе, запрашиваем фавориты
+    // Если нет, перенаправляем на auth
+    final bool isAuth = store.state.user.phone.isNotEmpty;
     void action() {
       if (store.state.homePageTitle != kFavouriteCategoryTitleText) {
         store.dispatch(GetFavouriteProductsPending());
@@ -39,7 +42,14 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
-    return {'title': store.state.homePageTitle, 'action': action};
+    void redirectAction() {
+      Routemaster.of(context).push('/auth');
+    }
+
+    return {
+      'title': store.state.homePageTitle,
+      'action': isAuth ? action : redirectAction
+    };
   }
 
   // Вывод иконки фаворит

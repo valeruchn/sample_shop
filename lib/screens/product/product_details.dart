@@ -58,7 +58,7 @@ class ProductDetails extends StatelessWidget {
                         alignment: Alignment.topRight,
                         child: StoreConnector<AppState, dynamic>(
                           converter: (store) => favouriteProductHandler
-                              .useHandler(store, productId),
+                              .useHandler(store, productId, context),
                           builder: (context, handler) => IconButton(
                             icon: favouriteProductHandler
                                 .favouriteIcon(handler['isFavourite']),

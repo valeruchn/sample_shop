@@ -63,7 +63,7 @@ class ProductCard extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: StoreConnector<AppState, dynamic>(
                     converter: (store) =>
-                        favouriteProductHandler.useHandler(store, id),
+                        favouriteProductHandler.useHandler(store, id, context),
                     builder: (context, handler) => IconButton(
                       icon: favouriteProductHandler
                           .favouriteIcon(handler['isFavourite']),
