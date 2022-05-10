@@ -19,7 +19,8 @@ class CurrentOrderModel {
     required this.products,
     required this.totalPrice,
     required this.status,
-    required this.date
+    required this.date,
+    this.comment
   });
 
   @JsonKey(name: '_id')
@@ -32,6 +33,7 @@ class CurrentOrderModel {
   final AddressModel address;
   final String status;
   final DateTime date;
+  final String? comment;
 
   // конвертация из JSON в обьект
   factory CurrentOrderModel.fromJson(Map<String, dynamic> json) =>

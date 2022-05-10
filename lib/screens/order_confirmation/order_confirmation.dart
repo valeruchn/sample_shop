@@ -11,23 +11,23 @@ class OrderConfirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // Отключение фокуса при клике за пределы поля
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: Scaffold(
-        appBar: AppBar(title: const Text(kConfirmationOrderText),),
-        body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            children: <Widget>[
-              StoreConnector<AppState, UserModel>(
+        // Отключение фокуса при клике за пределы поля
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              title: const Text(kConfirmationOrderText),
+            ),
+            body:  SingleChildScrollView(
+              reverse: true,
+              child: StoreConnector<AppState, UserModel>(
                   converter: (store) => store.state.user,
-                  builder: (context, user) => OrderUserDetails(user: user),
-              ),
-            ],),
-        ),
-        ),
-    );
+                  builder: (context, user) => SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.85,
+                      child: OrderUserDetails(user: user)),
+                ),
+            ),
+            ));
   }
 }

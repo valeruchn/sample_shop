@@ -11,13 +11,17 @@ class OrderConfirmationFormField extends StatelessWidget {
       required this.controller,
       required this.isEditing,
       required this.label,
-      required this.isRequired})
+      required this.isRequired,
+      this.maxLength = 30,
+      this.maxLines = 1})
       : super(key: key);
 
   final TextEditingController controller;
   final bool isEditing;
   final bool isRequired;
   final String label;
+  final int? maxLength;
+  final int? maxLines;
 
   // form validator
   String? _validator(String? value, String fieldName) {
@@ -37,7 +41,8 @@ class OrderConfirmationFormField extends StatelessWidget {
             controller: controller,
             onChanged: (value) => setState(() {}),
             enabled: isEditing,
-            maxLength: 30,
+            maxLength: maxLength,
+            maxLines: maxLines,
             validator: (value) => isRequired ? _validator(value, label) : null,
             decoration: InputDecoration(
                 labelText: '$label${isRequired?'*':''}',

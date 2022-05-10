@@ -9,8 +9,9 @@ import 'package:sample_shop/common/helpers/routing/bottom_navigator/bottom.navig
 import 'package:sample_shop/screens/auth/auth.dart';
 import 'package:sample_shop/screens/cart/cart.dart';
 import 'package:sample_shop/screens/home_page/home_page.dart';
+import 'package:sample_shop/screens/order_confirmation/new_order_details.dart';
 import 'package:sample_shop/screens/order_confirmation/order_confirmation.dart';
-import 'package:sample_shop/screens/orders/order_details.dart';
+import 'package:sample_shop/screens/orders/order_log_details.dart';
 import 'package:sample_shop/screens/orders/orders_log.dart';
 import 'package:sample_shop/screens/product/product_details.dart';
 import 'package:sample_shop/screens/profile/profile.dart';
@@ -25,8 +26,11 @@ RouteMap createRoutes(bool isAuth) {
         MaterialPage(child: isAuth ? const OrdersLog() : const Auth()),
     '/Settings': (route) => const MaterialPage(child: Settings()),
     '/cart': (route) => const MaterialPage(child: Cart()),
-    '/order-confirmation': (route) =>
+    '/cart/order-confirmation': (route) =>
         MaterialPage(child: isAuth ? const OrderConfirmation() : const Auth()),
+    '/cart/product/:id': (route) => MaterialPage(
+        child: ProductDetails(productId: route.pathParameters['id'] as String)),
+    '/new-order': (route) => const MaterialPage(child: NewOrder()),
     '/auth': (route) =>
         MaterialPage(child: !isAuth ? const Auth() : const Profile()),
     '/profile': (route) =>
@@ -35,7 +39,7 @@ RouteMap createRoutes(bool isAuth) {
         child: ProductDetails(productId: route.pathParameters['id'] as String)),
     '/order/:id': (route) => MaterialPage(
         child: isAuth
-            ? OrderDetails(
+            ? OrderLogDetails(
                 orderId: route.pathParameters['id'] as String,
               )
             : const Auth()),

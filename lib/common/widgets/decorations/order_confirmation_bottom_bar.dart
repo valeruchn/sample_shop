@@ -1,7 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+
 // Project imports:
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
@@ -16,7 +19,7 @@ class OrderConfirmationBottomBar extends StatelessWidget {
       {Key? key, required this.action, this.buttonText = kApplyOrderButtonText})
       : super(key: key);
   final String buttonText;
-  final Function() action;
+  final Function(Store<AppState> store) action;
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +38,15 @@ class OrderConfirmationBottomBar extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 10.00),
                   width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: action, child: Text(buttonText)),
+                  child: StoreConnector<AppState, dynamic>(
+                    converter: action,
+                    builder: (context, cb) => ElevatedButton(
+                        onPressed: cb,
+                        child: Text(
+                          buttonText,
+                          style: const TextStyle(fontSize: 17.00),
+                        )),
+                  ),
                 )
               ]),
             )));

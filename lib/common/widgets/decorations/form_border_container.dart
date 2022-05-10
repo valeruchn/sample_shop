@@ -10,6 +10,8 @@ class FormBorderContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 10.00),
       padding: const EdgeInsets.symmetric(horizontal: 10.00, vertical: 15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),

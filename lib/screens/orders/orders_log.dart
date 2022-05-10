@@ -32,7 +32,7 @@ class OrdersLog extends StatelessWidget {
         onInit: (store) {
           final _phone = store.state.user.phone;
           if (_phone != '') {
-            store.dispatch(GetOrdersPending(phone: _phone));
+            store.dispatch(GetOrdersPending(/*phone: _phone*/));
           }
         },
         converter: (store) => store.state.orders.ordersLog ?? [],

@@ -20,6 +20,7 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductModel>(
+        // todo запрос на api
         converter: (store) => store.state.products
             .where((element) => element.id == productId)
             .first,

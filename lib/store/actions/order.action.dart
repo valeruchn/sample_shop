@@ -13,12 +13,7 @@ class CreateOrderSuccess {
   final CurrentOrderModel order;
 }
 
-// todo добавить jwt token, брать телефон из токена
-class GetOrdersPending {
-  GetOrdersPending({required this.phone});
-
-  final String phone;
-}
+class GetOrdersPending {}
 
 class GetOrdersSuccess {
   GetOrdersSuccess({required this.ordersLog});

@@ -19,6 +19,7 @@ CurrentOrderModel _$CurrentOrderModelFromJson(Map<String, dynamic> json) =>
       totalPrice: json['totalPrice'] as int,
       status: json['status'] as String,
       date: DateTime.parse(json['date'] as String),
+      comment: json['comment'] as String?,
     );
 
 Map<String, dynamic> _$CurrentOrderModelToJson(CurrentOrderModel instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$CurrentOrderModelToJson(CurrentOrderModel instance) =>
       'address': instance.address.toJson(),
       'status': instance.status,
       'date': instance.date.toIso8601String(),
+      'comment': instance.comment,
     };

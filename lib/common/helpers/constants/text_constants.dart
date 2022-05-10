@@ -28,6 +28,8 @@ const kAllCategoryTitleSearchText = 'all';
 // Cart screen:
 const kTotalPriceText = 'Вартість замовлення';
 const kApplyOrderText = 'Оформити замовлення';
+const kCartIsEmptyText = 'Кошик порожній';
+const kGotoCatalogText = 'Додати товари';
 
 // Order confirmation screen:
 const kInputLabelValidatorText = 'Введіть';
@@ -38,4 +40,17 @@ const kHouseNumberFieldText = 'Номер будинку';
 const kFlatFieldText = 'Квартира';
 const kContactFieldsBlockTitleText = 'Контактні дані';
 const kAddressFieldsBlockTitleText = 'Адреса';
+const kCommentLabelFieldText = 'Коментар';
 const kApplyOrderButtonText = 'Підтвердити замовлення';
+
+// Order details screen
+const kOrderIdText = 'Номер замовлення';
+const kStatusOrderText = 'Статус замовлення';
+const kTotalPriceOrderText = 'Загальна вартість';
+const kOrderDetailsTitleText = 'Деталі замовлення';
+const kOrderListTitleText = 'Склад замовлення';
+const kCountItemText = 'од';
+const kPriceText = 'Ціна:';
+const kOrderDateText = 'Дата замовлення';
+const kCommentToOrderText = 'Коментар до замовлення';
+

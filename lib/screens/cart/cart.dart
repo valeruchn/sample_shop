@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:routemaster/routemaster.dart';
 
 // Project imports:
-import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
+import 'package:sample_shop/common/widgets/decorations/order_confirmation_bottom_bar.dart';
 import 'package:sample_shop/screens/cart/cart_item.dart';
 import 'package:sample_shop/store/actions/cart.action.dart';
 import 'package:sample_shop/store/models/cart/cart_item.model.dart';
@@ -18,6 +19,10 @@ class Cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void goToOrderConfirmationScreen(Store<AppState> store) => () {
+          Routemaster.of(context).push('/cart/order-confirmation');
+        };
+
     return Scaffold(
       appBar: AppBar(title: const Text(kCartScreenTitleText)),
       body: StoreConnector<AppState, List<CartItemModel>>(
@@ -27,43 +32,40 @@ class Cart extends StatelessWidget {
           }
         },
         converter: ((store) => store.state.cart.cartItems),
-        builder: ((context, products) => Column(
-              children: [
-                Expanded(
-                  child: ListView(children: <Widget>[
-                    ...products
-                        .map((product) => CartItem(product: product))
-                        .toList()
-                  ]),
+        builder: ((context, products) => products.isNotEmpty
+            ? Column(
+                children: [
+                  Expanded(
+                    child: ListView(children: <Widget>[
+                      ...products
+                          .map((product) => CartItem(product: product))
+                          .toList()
+                    ]),
+                  ),
+                  OrderConfirmationBottomBar.confirm(
+                      action: goToOrderConfirmationScreen),
+                ],
+              )
+            // Если товаров нет, выводим кнопку с возвратом в каталог
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                        height: 25.00,
+                        child: Text(kCartIsEmptyText,
+                            style: TextStyle(fontSize: 15.00))),
+                    ElevatedButton(
+                        onPressed: () {
+                          Routemaster.of(context).push('/Home');
+                        },
+                        child: const Text(
+                          kGotoCatalogText,
+                          style: TextStyle(fontSize: 17.00),
+                        ))
+                  ],
                 ),
-                StoreConnector<AppState, int>(
-                    converter: ((store) => store.state.cart.totalPrice),
-                    builder: ((context, totalPrice) => Container(
-                          color: kAppAndNavBarColor,
-                          padding: const EdgeInsets.all(10.00),
-                          child: Column(children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              margin: const EdgeInsets.all(10.00),
-                              child: Text(
-                                  '$kTotalPriceText: $totalPrice $kCurrencyUah',
-                                  style: const TextStyle(fontSize: 17.00)),
-                            ),
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10.00),
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    Routemaster.of(context)
-                                        .push('/order-confirmation');
-                                  },
-                                  child: const Text(kApplyOrderText)),
-                            )
-                          ]),
-                        )))
-              ],
-            )),
+              )),
       ),
     );
   }

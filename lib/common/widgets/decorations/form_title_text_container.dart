@@ -9,7 +9,7 @@ class FormTitleTextContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.00),
+        margin: const EdgeInsets.symmetric(vertical: 15.00),
         child: Text(
           text,
           style:

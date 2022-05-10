@@ -1,20 +1,29 @@
 // Package imports:
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:sample_shop/common/helpers/utils/add_product_from_order.dart';
+import 'package:sample_shop/common/localStorage/cart_local_storage_actions.dart';
 
 // Project imports:
 import 'package:sample_shop/common/services/order.service.dart';
 import 'package:sample_shop/store/actions/cart.action.dart';
 import 'package:sample_shop/store/actions/order.action.dart';
+import 'package:sample_shop/store/models/cart/cart_query.model.dart';
+import 'package:sample_shop/store/models/order/create_order_dto.model.dart';
 import 'package:sample_shop/store/models/order/current_order.model.dart';
+
+
 
 Stream<void> createOrderEpic(
     Stream<dynamic> actions, EpicStore<dynamic> store) {
   return actions
       .where((dynamic action) => action is CreateOrderPending)
       .switchMap((dynamic action) =>
+        // получаем товары из корзины и добавляем в CreateOrderDtoModel
+        Stream<CreateOrderDtoModel>.fromFuture(addProductsFromOrder(action.order)))
+      .switchMap((CreateOrderDtoModel preparedOrder) =>
           // Добавляем заказ на api
-          Stream<CurrentOrderModel>.fromFuture(createNewOrder(action.order)))
+          Stream<CurrentOrderModel>.fromFuture(createNewOrder(preparedOrder)))
       .switchMap((CurrentOrderModel order) =>
           // Добавляем заказ в firestore
           Stream<CurrentOrderModel>.fromFuture(addOrder(order))
