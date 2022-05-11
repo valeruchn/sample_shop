@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:routemaster/routemaster.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sample_shop/common/widgets/notification/notification.widget.dart';
 
 class BottomNavigator extends StatefulWidget {
   BottomNavigator({Key? key}) : super(key: key);
@@ -16,12 +17,16 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   Widget build(BuildContext context) {
     final tabPage = TabPage.of(context);
     return Scaffold(
-        body: TabBarView(
-          controller: tabPage.controller,
-          children: [
-            for (final stack in tabPage.stacks)
-              PageStackNavigator(stack: stack),
-          ],
+        // Обработка сообщений, позже вынести из навигатора
+        body: NotificationHandler(
+          // Навигатор
+          child: TabBarView(
+            controller: tabPage.controller,
+            children: [
+              for (final stack in tabPage.stacks)
+                PageStackNavigator(stack: stack),
+            ],
+          ),
         ),
         bottomNavigationBar: Container(
           color: const Color(0xFF313E44),

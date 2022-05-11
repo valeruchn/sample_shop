@@ -15,6 +15,17 @@ class GetProductsSuccess {
   final List<ProductModel> products;
 }
 
+// Получение продукта по id
+class GetProductPending{
+  GetProductPending({ required this.productId });
+  final String productId;
+}
+
+class GetProductSuccess{
+  GetProductSuccess({required this.product});
+  ProductModel product;
+}
+
 // Получить список избранных продуктов
 class GetFavouriteProductsPending {}
 

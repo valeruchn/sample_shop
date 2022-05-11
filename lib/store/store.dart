@@ -25,17 +25,19 @@ AppState initialState = AppState(
       phone: '',
     ),
     products: <ProductModel>[],
+    currentProduct: null,
     categories: <CategoryModel>[],
     cart: CartModel(cartItems: [], totalPrice: 0),
     orders: OrderModel(),
-    homePageTitle: kHomeScreenTitleText);
+    homePageTitle: kHomeScreenTitleText,
+    notification: null);
 
-AppState rootReducer (AppState state, dynamic action) {
-      if (action is UnauthorizedUser) {
-            return appStateReducer(initialState, action);
-      } else {
-            return appStateReducer(state, action);
-      }
+AppState rootReducer(AppState state, dynamic action) {
+  if (action is UnauthorizedUser) {
+    return appStateReducer(initialState, action);
+  } else {
+    return appStateReducer(state, action);
+  }
 }
 
 final Store<AppState> store = Store<AppState>(rootReducer,
@@ -44,6 +46,7 @@ final Store<AppState> store = Store<AppState>(rootReducer,
         dynamic Function(Store<AppState>, dynamic, dynamic Function(dynamic))>[
       EpicMiddleware<dynamic>(getUserProfileEpic),
       EpicMiddleware<dynamic>(getProductsEpic),
+      EpicMiddleware<dynamic>(getProductEpic),
       EpicMiddleware<dynamic>(getCartEpic),
       EpicMiddleware<dynamic>(addToCartEpic),
       EpicMiddleware<dynamic>(deleteFromCartEpic),

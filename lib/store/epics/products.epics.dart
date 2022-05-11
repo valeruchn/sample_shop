@@ -33,6 +33,14 @@ Stream<void> getProductsEpic(
           .handleError((dynamic e) => {print(e)}));
 }
 
+Stream<void> getProductEpic(Stream<dynamic> actions, EpicStore<dynamic> store) {
+  return actions.where((action) => action is GetProductPending).switchMap(
+      (action) => Stream<ProductModel?>.fromFuture(getProduct(action.productId))
+          .expand((ProductModel? product) =>
+              [if (product != null) GetProductSuccess(product: product)])
+          .handleError((e) => {print('error get product epic: $e')}));
+}
+
 Stream<void> getFavouriteProductsEpic(
     Stream<dynamic> actions, EpicStore<dynamic> store) {
   return actions

@@ -16,6 +16,7 @@ const kProfileScreenTitleText = 'Профіль';
 const kHomeScreenTitleText = 'Домашня';
 const kCartScreenTitleText = 'Кошик';
 const kConfirmationOrderText = 'Підтвердження замовлення';
+const kOrdersLogTitleText = 'Замовлення';
 // SearchPanel home screen:
 const kSearchPanelLabelText = 'Пошук';
 // SearchProducts category titles:
@@ -53,4 +54,15 @@ const kCountItemText = 'од';
 const kPriceText = 'Ціна:';
 const kOrderDateText = 'Дата замовлення';
 const kCommentToOrderText = 'Коментар до замовлення';
+
+// SnackBar status
+const kLostInternetConnectionError = 'Немає доступу до мережі';
+const kLostConnectionWithApiErrorText = "Немає з'єднання з сервером";
+const kResponseErrorText = 'Помилка отримання даних';
+const kNewOrderCreatedSuccessText = 'Замовлення створено успішно';
+
+// Order statuses:
+const kNewOrderStatusText = 'нове';
+const kAcceptedOrderStatusText = 'в обробці';
+const kCompletedOrderStatusText = 'виконано';
 

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
+import 'package:sample_shop/common/helpers/utils/conver_order_status.dart';
 import 'package:sample_shop/common/widgets/decorations/form_border_container.dart';
 import 'package:sample_shop/common/widgets/decorations/form_title_text_container.dart';
 import 'package:sample_shop/common/widgets/decorations/order_details_field.dart';
@@ -33,7 +34,7 @@ class OrderDetails extends StatelessWidget {
                         description:
                             DateFormat('yyyy-MM-dd  HH:mm').format(order.date)),
                     OrderDetailsCustomField(
-                        title: kStatusOrderText, description: order.status),
+                        title: kStatusOrderText, description: convertOrderStatus(order.status)),
                     OrderDetailsCustomField(
                         title: kTotalPriceOrderText,
                         description:

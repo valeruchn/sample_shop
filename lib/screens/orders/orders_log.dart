@@ -5,26 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
-import 'package:sample_shop/store/actions/order.action.dart';
+import 'package:sample_shop/common/helpers/utils/conver_order_status.dart';
 
 // Project imports:
 import 'package:sample_shop/store/models/order/current_order.model.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
+import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
+import 'package:sample_shop/common/helpers/constants/text_constants.dart';
+import 'package:sample_shop/store/actions/order.action.dart';
 
 class OrdersLog extends StatelessWidget {
   const OrdersLog({Key? key}) : super(key: key);
-
-  String _getOrderStatus(String status) {
-    if (status == 'incoming') {
-      return 'нове';
-    } else if (status == 'accepted') {
-      return 'в обробці';
-    } else if (status == 'completed') {
-      return 'виконано';
-    }
-    return '';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +23,14 @@ class OrdersLog extends StatelessWidget {
         onInit: (store) {
           final _phone = store.state.user.phone;
           if (_phone != '') {
-            store.dispatch(GetOrdersPending(/*phone: _phone*/));
+            store.dispatch(GetOrdersPending());
           }
         },
         converter: (store) => store.state.orders.ordersLog ?? [],
         builder: (context, orders) => Scaffold(
-              appBar: AppBar(title: const Text('Замовлення'),),
+              appBar: AppBar(
+                title: const Text(kOrdersLogTitleText),
+              ),
               body: Container(
                 color: kBackGroundColor,
                 width: double.infinity,
@@ -62,8 +55,7 @@ class OrdersLog extends StatelessWidget {
                                           blurRadius: 10,
                                           color: Colors.black,
                                           offset: Offset(1, 3))
-                                    ]
-                                ),
+                                    ]),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -101,7 +93,7 @@ class OrdersLog extends StatelessWidget {
                                                 CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                  'Cтатус: ${_getOrderStatus(order.status)}',
+                                                  'Cтатус: ${convertOrderStatus(order.status)}',
                                                   style: const TextStyle(
                                                       color: Colors.white)),
                                               Container(

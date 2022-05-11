@@ -109,7 +109,6 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, itemsCount) => Text(itemsCount)),
                 child: const Icon(Icons.shopping_cart),
               ),
-              // tooltip: 'Open shopping cart',
               onPressed: () => Routemaster.of(context).push('/cart'),
             )
           ],
@@ -118,7 +117,6 @@ class _HomePageState extends State<HomePage> {
         // Для получения данных из стейт
         body: StoreConnector<AppState, AppState>(
           onInit: (store) {
-            store.dispatch(GetProductsPending());
             // Запрос продуктов
             store.dispatch(GetProductsPending());
             // Запрос корзины
