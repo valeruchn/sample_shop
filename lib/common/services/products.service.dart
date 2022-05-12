@@ -13,11 +13,12 @@ import 'package:sample_shop/store/store.dart';
 Future<List<ProductModel>> getProducts(
     {String? category = 'all',
     String? subcategory = '',
+    int? page = 1,
     String? search = ''}) async {
   try {
     final Response<dynamic> res = await api.dio.get<dynamic>(
-        '/products/get-products?category=$category&subcategory=$subcategory&search=$search');
-    final List<dynamic> products = res.data as List<dynamic>;
+        '/products/get-products?page=$page&category=$category&subcategory=$subcategory&search=$search');
+    final products = res.data as List<dynamic>;
     // print('products: $products');
     return products
         .map<ProductModel>((dynamic products) =>
@@ -30,7 +31,7 @@ Future<List<ProductModel>> getProducts(
 }
 
 // Получение продукта по id
-Future<ProductModel?> getProduct(String productId) async{
+Future<ProductModel?> getProduct(String productId) async {
   try {
     final Response res = await api.dio.get('/products/get-products/$productId');
     final Map<String, dynamic> product = res.data;

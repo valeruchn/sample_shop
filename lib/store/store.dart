@@ -2,6 +2,8 @@
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:sample_shop/store/actions/auth.action.dart';
+import 'package:sample_shop/store/models/products/products.model.dart';
+import 'package:sample_shop/store/models/products/products_query.model.dart';
 
 // Project imports:
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -24,7 +26,10 @@ AppState initialState = AppState(
       // uid: '',
       phone: '',
     ),
-    products: <ProductModel>[],
+    products: ProductsModel(
+      productsQuery: ProductQueryModel(),
+      productsList: <ProductModel>[]
+    ),
     currentProduct: null,
     categories: <CategoryModel>[],
     cart: CartModel(cartItems: [], totalPrice: 0),
@@ -62,6 +67,6 @@ final Store<AppState> store = Store<AppState>(rootReducer,
       EpicMiddleware<dynamic>(unauthorizedUserEpic),
       EpicMiddleware<dynamic>(addProductToFavouritesEpic),
       EpicMiddleware<dynamic>(deleteProductFromFavouritesEpic),
-      EpicMiddleware<dynamic>(getFavouriteProductsEpic),
+      // EpicMiddleware<dynamic>(getFavouriteProductsEpic),
       EpicMiddleware<dynamic>(getCategoriesEpic)
     ]);

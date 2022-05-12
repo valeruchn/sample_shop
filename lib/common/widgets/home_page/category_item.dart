@@ -55,7 +55,7 @@ class _CategoryItemState extends State<CategoryItem> {
           Store<AppState> store) =>
       ({required String category, String? subcategory}) {
         store.dispatch(
-            GetProductsPending(category: category, subcategory: subcategory));
+            SelectProductCategoryPending(category: category, subcategory: subcategory));
         Navigator.pop(context);
       };
 

@@ -23,10 +23,11 @@ class _SearchPanelState extends State<SearchPanel> {
     return StoreConnector<AppState, dynamic>(
       // запрашиваем продукты при инициализации виджета, для
       // корректной работы при открытии и закрытии поиска
-      onInit: (store) => store.dispatch(GetProductsPending()),
-      onDispose: (store) => store.dispatch(GetProductsPending()),
+      // onInit: (store) => store.dispatch(HandleSearchQueryPending(search: '')),
+      // todo вместо этого добавить кнопку сброса поиска
+      onDispose: (store) => store.dispatch(ResetQueryFiltersPending()),
       converter: (store) => (String searchText) =>
-          store.dispatch(GetProductsPending(search: searchText)),
+          store.dispatch(HandleSearchQueryPending(search: searchText)),
       builder: (context, search) => Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
         child: TextField(

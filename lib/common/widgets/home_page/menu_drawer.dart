@@ -33,7 +33,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
         } else if (category == kFavouriteCategorySearch.category) {
           store.dispatch(GetFavouriteProductsPending());
         } else {
-          store.dispatch(GetProductsPending());
+          store.dispatch(ResetQueryFiltersPending());
         }
         Navigator.pop(context);
       };

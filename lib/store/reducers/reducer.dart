@@ -5,6 +5,7 @@ import 'package:sample_shop/store/models/categories/category.model.dart';
 import 'package:sample_shop/store/models/notification/notification.model.dart';
 import 'package:sample_shop/store/models/order/order.model.dart';
 import 'package:sample_shop/store/models/products/product.model.dart';
+import 'package:sample_shop/store/models/products/products.model.dart';
 import 'package:sample_shop/store/models/user/user.model.dart';
 import 'package:sample_shop/store/reducers/cart.reducer.dart';
 import 'package:sample_shop/store/reducers/categories.reducer.dart';
@@ -30,7 +31,7 @@ class AppState {
 
   // AuthUserFromFirebase auth;
   UserModel user;
-  List<ProductModel> products;
+  ProductsModel products;
   ProductModel? currentProduct;
   List<CategoryModel> categories;
   CartModel cart;
