@@ -13,14 +13,6 @@ class CreateOrderSuccess {
   final CurrentOrderModel order;
 }
 
-class GetOrdersPending {}
-
-class GetOrdersSuccess {
-  GetOrdersSuccess({required this.ordersLog});
-
-  final List<CurrentOrderModel> ordersLog;
-}
-
 // получение ордера по id
 class GetCurrentOrderPending {
   GetCurrentOrderPending({required this.orderId});
@@ -33,3 +25,17 @@ class GetCurrentOrderSuccess {
 
   final CurrentOrderModel currentOrder;
 }
+
+class GetOrdersPending {}
+
+class GetOrdersSuccess {
+  GetOrdersSuccess({required this.ordersLog});
+
+  final List<CurrentOrderModel> ordersLog;
+}
+
+class NextPageOrdersPending {}
+
+class LastPageOrderPending {}
+
+class ResetQueryFiltersPending {}

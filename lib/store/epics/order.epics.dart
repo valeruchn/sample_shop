@@ -47,11 +47,15 @@ Stream<void> getUserOrdersEpic(
     Stream<dynamic> actions, EpicStore<dynamic> store) {
   return actions
       .where((action) => action is GetOrdersPending)
-      .switchMap((action) =>
-          Stream<List<CurrentOrderModel>>.fromFuture(getOrdersLog()))
-      .expand((List<CurrentOrderModel> orders) =>
-          [GetOrdersSuccess(ordersLog: orders)])
-      .handleError((dynamic e) => {print(e)});
+      .switchMap((action) => Stream<List<CurrentOrderModel>>.fromFuture(
+          getOrdersLog(page: store.state.orders.ordersQuery.page)))
+      .expand((List<CurrentOrderModel> orders) => [
+            GetOrdersSuccess(ordersLog: orders),
+            if (orders.isEmpty) LastPageOrderPending()
+          ])
+      .handleError((dynamic e) {
+    print('error get orders epic: $e');
+  });
 }
 
 Stream<void> getCurrentOrderEpic(

@@ -27,7 +27,8 @@ Future<CurrentOrderModel> addOrder(CurrentOrderModel order) {
 // Создание заказа в основном api
 Future<CurrentOrderModel> createNewOrder(CreateOrderDtoModel order) async {
   try {
-    final Response<dynamic> res = await api.dio.post('/orders/create', data: order);
+    final Response<dynamic> res =
+        await api.dio.post('/orders/create', data: order);
     final Map<String, dynamic> createdOrder = res.data as Map<String, dynamic>;
     return CurrentOrderModel.fromJson(createdOrder);
   } catch (e) {
@@ -36,9 +37,9 @@ Future<CurrentOrderModel> createNewOrder(CreateOrderDtoModel order) async {
   return null as CurrentOrderModel;
 }
 
-Future<List<CurrentOrderModel>> getOrdersLog() async {
+Future<List<CurrentOrderModel>> getOrdersLog({int page = 1}) async {
   try {
-    final Response<dynamic> res = await api.dio.get('/orders');
+    final Response<dynamic> res = await api.dio.get('/orders?page=$page');
     final List<dynamic> getOrdersResult = res.data as List<dynamic>;
     return getOrdersResult
         .map<CurrentOrderModel>((order) =>
@@ -52,7 +53,8 @@ Future<List<CurrentOrderModel>> getOrdersLog() async {
 
 Future<CurrentOrderModel> getCurrentOrder(String orderId) async {
   try {
-    final Response<dynamic> res = await api.dio.get('/orders/get-order/$orderId');
+    final Response<dynamic> res =
+        await api.dio.get('/orders/get-order/$orderId');
     final Map<String, dynamic> getCurrentOrderResult = res.data;
     return CurrentOrderModel.fromJson(getCurrentOrderResult);
   } catch (e) {

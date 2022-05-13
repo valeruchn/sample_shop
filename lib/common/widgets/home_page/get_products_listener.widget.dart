@@ -11,7 +11,7 @@ import 'package:sample_shop/store/reducers/reducer.dart';
 import 'package:sample_shop/store/actions/products.action.dart';
 import 'package:sample_shop/store/store.dart';
 
-// используем пакет equatable для сравнения обьектов
+// Используем пакет equatable для сравнения обьектов
 class _FilterModel extends Equatable {
   const _FilterModel(
       {this.category,
@@ -19,20 +19,18 @@ class _FilterModel extends Equatable {
       this.search,
       this.favourites = false,
       this.page = 1,
-      this.isLoad = false,
       this.isLastPage = false});
 
   final String? category;
   final String? subcategory;
   final String? search;
-  final bool isLoad;
   final int page;
   final bool favourites;
   final bool isLastPage;
 
   @override
   List<Object?> get props =>
-      [page, isLoad, favourites, search, subcategory, category];
+      [page, favourites, search, subcategory, category, isLastPage];
 }
 
 class GetProductsListener extends StatelessWidget {
@@ -56,15 +54,15 @@ class GetProductsListener extends StatelessWidget {
             category: query.category,
             subcategory: query.subcategory,
             search: query.search,
-            isLoad: query.isLoad,
             page: query.page,
+            isLastPage: query.isLastPage,
             favourites: query.favourites);
       },
       builder: (context, state) => child,
-      // Если параметры запроса в стейте изменились - запрашиваем продукты
       onWillChange: (oldState, newState) {
+        // Если параметры запроса в стейте изменились
+        // и еще доступны продукты к загрузке - делаем запрос
         if (oldState != newState && !newState.isLastPage) {
-          print(newState.page);
           store.dispatch(GetProductsPending());
         }
       },

@@ -2,12 +2,9 @@
 import 'package:dio/dio.dart';
 
 // Project imports:
+import 'dart:async';
 import 'package:sample_shop/common/helpers/api/app_api.dart';
-import 'package:sample_shop/common/helpers/constants/text_constants.dart';
-import 'package:sample_shop/store/actions/notification.action.dart';
-import 'package:sample_shop/store/models/notification/notification.model.dart';
 import 'package:sample_shop/store/models/products/product.model.dart';
-import 'package:sample_shop/store/store.dart';
 
 // Получение списка продуктов с фильтрами
 Future<List<ProductModel>> getProducts(
@@ -43,9 +40,9 @@ Future<ProductModel?> getProduct(String productId) async {
 }
 
 // Получение списка избранного пользователя
-Future<List<ProductModel>> getFavouritesProducts() async {
+Future<List<ProductModel>> getFavouritesProducts({int? page = 1}) async {
   try {
-    final Response res = await api.dio.get('/products/favourites');
+    final Response res = await api.dio.get('/products/favourites?page=$page');
     final List<dynamic> products = res.data;
     return products
         .map<ProductModel>((dynamic products) =>

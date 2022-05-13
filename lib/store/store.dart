@@ -2,6 +2,7 @@
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:sample_shop/store/actions/auth.action.dart';
+import 'package:sample_shop/store/models/order/orders_query.model.dart';
 import 'package:sample_shop/store/models/products/products.model.dart';
 import 'package:sample_shop/store/models/products/products_query.model.dart';
 
@@ -27,13 +28,15 @@ AppState initialState = AppState(
       phone: '',
     ),
     products: ProductsModel(
-      productsQuery: ProductQueryModel(),
+      productsQuery: const ProductQueryModel(),
       productsList: <ProductModel>[]
     ),
     currentProduct: null,
     categories: <CategoryModel>[],
     cart: CartModel(cartItems: [], totalPrice: 0),
-    orders: OrderModel(),
+    orders: OrderModel(
+      ordersQuery: OrdersQueryModel()
+    ),
     homePageTitle: kHomeScreenTitleText,
     notification: null);
 

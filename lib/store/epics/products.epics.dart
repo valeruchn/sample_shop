@@ -20,7 +20,7 @@ Stream<void> getProductsEpic(
       .where((dynamic action) => action is GetProductsPending)
       .switchMap((dynamic action) => Stream<List<ProductModel>>.fromFuture(
               store.state.products.productsQuery.favourites
-                  ? getFavouritesProducts()
+                  ? getFavouritesProducts(page: _query(store).page)
                   : getProducts(
                       category: _query(store).category ?? '',
                       subcategory: _query(store).subcategory ?? '',

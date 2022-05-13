@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:intl/intl.dart';
-import 'package:routemaster/routemaster.dart';
-import 'package:sample_shop/common/helpers/utils/conver_order_status.dart';
+import 'package:sample_shop/common/widgets/orders_log/orders_log_filters_listener.widget.dart';
 
 // Project imports:
 import 'package:sample_shop/store/models/order/current_order.model.dart';
@@ -13,120 +11,82 @@ import 'package:sample_shop/store/reducers/reducer.dart';
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 import 'package:sample_shop/store/actions/order.action.dart';
+import 'package:sample_shop/screens/orders/orders_log_item.dart';
+import 'package:sample_shop/store/store.dart';
 
-class OrdersLog extends StatelessWidget {
+class _OrderStateModel {
+  _OrderStateModel({required this.orders, required this.isLoad});
+
+  List<CurrentOrderModel> orders;
+  final bool isLoad;
+}
+
+class OrdersLog extends StatefulWidget {
   const OrdersLog({Key? key}) : super(key: key);
 
   @override
+  State<OrdersLog> createState() => _OrdersLogState();
+}
+
+class _OrdersLogState extends State<OrdersLog> {
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollListener() {
+    // когда позиция скрола достигла последнего елемента
+    // происходит запрос следующей страницы
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      store.dispatch(NextPageOrdersPending());
+    }
+  }
+
+  // Подписываемся на отслеживание скрола
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  // Отписываемся при размонтировании виджета
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, List<CurrentOrderModel>>(
-        onInit: (store) {
-          final _phone = store.state.user.phone;
-          if (_phone != '') {
-            store.dispatch(GetOrdersPending());
-          }
-        },
-        converter: (store) => store.state.orders.ordersLog ?? [],
-        builder: (context, orders) => Scaffold(
-              appBar: AppBar(
-                title: const Text(kOrdersLogTitleText),
-              ),
-              body: Container(
-                color: kBackGroundColor,
-                width: double.infinity,
-                padding: const EdgeInsets.all(10.0),
-                child: ListView(
-                  children: [
-                    ...orders
-                        .map((order) => InkWell(
-                              // Переход в подробности заказа
-                              onTap: () => Routemaster.of(context)
-                                  .push('/order/${order.id}'),
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10.00),
-                                padding: const EdgeInsets.all(10.0),
-                                decoration: BoxDecoration(
-                                    color: kItemBackgroundColor,
-                                    // border: Border.all(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                          blurRadius: 10,
-                                          color: Colors.black,
-                                          offset: Offset(1, 3))
-                                    ]),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          flex: 4,
-                                          fit: FlexFit.tight,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Замовлення: ${order.oid}',
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                    top: 5.0),
-                                                child: Text(
-                                                  'від: ${DateFormat('yyyy-MM-dd').format(order.date)}',
-                                                  style: const TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Flexible(
-                                          flex: 2,
-                                          fit: FlexFit.tight,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                  'Cтатус: ${convertOrderStatus(order.status)}',
-                                                  style: const TextStyle(
-                                                      color: Colors.white)),
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                    top: 5.0),
-                                                child: Text(
-                                                    'Сумма: ${order.totalPrice} грн',
-                                                    style: const TextStyle(
-                                                        color: Colors.white)),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Divider(
-                                      color: Colors.white,
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 5.0),
-                                      child: Text(
-                                          'Склад: ${order.products.map((p) => p.title).join(', ')}',
-                                          style: const TextStyle(
-                                              color: Colors.white)),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ))
-                        .toList()
-                  ],
+    return OrdersLogFiltersListener(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(kOrdersLogTitleText),
+        ),
+        body: StoreConnector<AppState, _OrderStateModel>(
+          converter: (store) => _OrderStateModel(
+              orders: store.state.orders.ordersLog,
+              isLoad: store.state.orders.ordersQuery.isLoading),
+          builder: (context, ordersState) => Container(
+            color: kBackGroundColor,
+            // width: double.infinity,
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    controller: _scrollController,
+                    children: [
+                      ...ordersState.orders
+                          .map((order) => OrdersLogItem(order: order))
+                          .toList(),
+                    ],
+                  ),
                 ),
-              ),
-            ));
+                if (ordersState.isLoad) const CircularProgressIndicator()
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

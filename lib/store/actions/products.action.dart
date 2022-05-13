@@ -1,14 +1,7 @@
 // Project imports:
 import 'package:sample_shop/store/models/products/product.model.dart';
 
-class GetProductsPending {
-  GetProductsPending({this.category, this.search, this.subcategory, this.page});
-
-  final String? category;
-  final String? subcategory;
-  final String? search;
-  final int? page;
-}
+class GetProductsPending {}
 
 class GetProductsSuccess {
   GetProductsSuccess(this.products);
@@ -53,10 +46,5 @@ class SelectProductCategoryPending {
 // Переключить на следующую страницу
 class NextPageProductsPending {}
 
-class LastPageProductPending{}
-
-// class GetFavouriteProductsSuccess {
-//   GetFavouriteProductsSuccess({required this.products});
-//
-//   final List<ProductModel> products;
-// }
+// Отметить что последняя страница
+class LastPageProductPending {}

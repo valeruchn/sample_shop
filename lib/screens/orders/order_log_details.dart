@@ -26,11 +26,11 @@ class OrderLogDetails extends StatelessWidget {
             converter: ((store) => store.state.orders.currentOrder),
             builder: (context, order) => order == null
                 ? SizedBox(
-                height: MediaQuery.of(context).size.height * 0.85,
-                child: const Preloader())
+                    height: MediaQuery.of(context).size.height * 0.85,
+                    child: const Preloader())
                 : OrderDetails(
-              order: order,
-            ),
+                    order: order,
+                  ),
           ),
         ));
   }

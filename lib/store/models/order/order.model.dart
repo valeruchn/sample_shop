@@ -1,22 +1,14 @@
-// Package imports
-import 'package:json_annotation/json_annotation.dart';
-
 // Project imports:
 import 'package:sample_shop/store/models/order/current_order.model.dart';
+import 'package:sample_shop/store/models/order/orders_query.model.dart';
 
-part 'order.model.g.dart';
-
-@JsonSerializable(explicitToJson: true)
 class OrderModel {
-  OrderModel({this.currentOrder, this.ordersLog});
+  OrderModel(
+      {this.currentOrder,
+      this.ordersLog = const [],
+      required this.ordersQuery});
 
+  OrdersQueryModel ordersQuery;
   CurrentOrderModel? currentOrder;
-  List<CurrentOrderModel>? ordersLog;
-
-  // конвертация из JSON в обьект
-  factory OrderModel.fromJson(Map<String, dynamic> json) =>
-      _$OrderModelFromJson(json);
-
-  // конвертация из обьекта в JSON
-  Map<String, dynamic> toJson() => _$OrderModelToJson(this);
+  List<CurrentOrderModel> ordersLog;
 }

@@ -66,3 +66,10 @@ const kNewOrderStatusText = 'нове';
 const kAcceptedOrderStatusText = 'в обробці';
 const kCompletedOrderStatusText = 'виконано';
 
+// Orders log item screen:
+const kOrderNumberTitleText = 'Замовлення';
+const kStartOrderTitleText = 'від';
+const kOrderStatusText = 'Статус';
+const kOrderSumText = 'Сумма';
+const kOrderListText = 'Склад';
+

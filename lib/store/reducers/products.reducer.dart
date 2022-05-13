@@ -25,13 +25,19 @@ ProductsModel _getProducts(ProductsModel state, GetProductsSuccess action) {
       productsList: state.productsQuery.page > 1
           ? [...state.productsList, ...action.products]
           : action.products,
-      productsQuery: state.productsQuery);
+      productsQuery: ProductQueryModel(
+          category: state.productsQuery.category,
+          subcategory: state.productsQuery.subcategory,
+          search: state.productsQuery.search,
+          isLoad: false,
+          page: state.productsQuery.page,
+          favourites: state.productsQuery.favourites));
 }
 
 // Переключение страницы
 ProductsModel _nextPageProducts(
     ProductsModel state, NextPageProductsPending action) {
-  if (state.productsQuery.isLastPage) {
+  if (state.productsQuery.isLastPage || state.productsQuery.isLoad) {
     return state;
   } else {
     return ProductsModel(
@@ -40,7 +46,7 @@ ProductsModel _nextPageProducts(
             category: state.productsQuery.category,
             subcategory: state.productsQuery.subcategory,
             search: state.productsQuery.search,
-            isLoad: state.productsQuery.isLoad,
+            isLoad: true,
             page: state.productsQuery.page + 1,
             favourites: state.productsQuery.favourites));
   }

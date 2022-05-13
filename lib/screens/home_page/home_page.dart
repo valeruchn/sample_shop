@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:sample_shop/common/widgets/home_page/get_products_listener.widget.dart';
+import 'package:sample_shop/store/models/products/products.model.dart';
 
 // Project imports:
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -29,6 +30,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isOpenSearch = false;
+  final TextEditingController searchController = TextEditingController();
 
   // Выбор фавориты или все
   Map<String, dynamic> _handleSelectFavourites(Store<AppState> store) {
@@ -69,7 +71,7 @@ class _HomePageState extends State<HomePage> {
 
   ScrollController _scrollController = ScrollController();
 
-  void _scrollListener(){
+  void _scrollListener() {
     // когда позиция скрола достигла последнего елемента
     // происходит запрос следующей страницы
     if (_scrollController.position.pixels ==
@@ -77,12 +79,14 @@ class _HomePageState extends State<HomePage> {
       store.dispatch(NextPageProductsPending());
     }
   }
+
   // Подписываемся на отслеживание скрола
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_scrollListener);
   }
+
   // Отписываемся при размонтировании виджета
   @override
   void dispose() {
@@ -140,11 +144,12 @@ class _HomePageState extends State<HomePage> {
           ),
           endDrawer: const MenuDrawer(),
           // Для получения данных из стейт
-          body: StoreConnector<AppState, AppState>(
-            converter: (store) => store.state,
+          body: StoreConnector<AppState, ProductsModel>(
+            converter: (store) => store.state.products,
             builder: (context, state) => Column(
               children: [
-                if (_isOpenSearch) const SearchPanel(),
+                if (_isOpenSearch)
+                  SearchPanel(searchController: searchController),
                 Expanded(
                   child: GridView.count(
                     controller: _scrollController,
@@ -158,9 +163,9 @@ class _HomePageState extends State<HomePage> {
                     crossAxisCount: 2,
                     // соотношение сторон ячеек грид сетки
                     childAspectRatio: (1 / 1.5),
-                    children: state.products.productsList.isNotEmpty
+                    children: state.productsList.isNotEmpty
                         ? [
-                            ...state.products.productsList
+                            ...state.productsList
                                 .map((product) => ProductCard(
                                       id: product.id,
                                       title: product.title,
@@ -176,6 +181,7 @@ class _HomePageState extends State<HomePage> {
                         : [],
                   ),
                 ),
+                if(state.productsQuery.isLoad) const CircularProgressIndicator()
               ],
             ),
           ),
