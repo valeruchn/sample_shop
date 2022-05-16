@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:routemaster/routemaster.dart';
 // Project imports:
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
+import 'package:sample_shop/common/helpers/constants/connection.constants.dart';
 import 'package:sample_shop/common/helpers/utils/favorite_product_handler.dart';
 import 'package:sample_shop/common/widgets/modals/add_to_cart_modal.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -55,7 +56,7 @@ class ProductCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image:
-                        NetworkImage("http://10.0.2.2/products/photo/$photo"),
+                        NetworkImage('$kProductsPhotoBaseUlt/$photo'),
                     fit: BoxFit.contain,
                   ),
                 ),

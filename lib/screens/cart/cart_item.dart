@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:sample_shop/common/helpers/constants/connection.constants.dart';
 
 // Project imports:
 import 'package:sample_shop/store/models/cart/cart_item.model.dart';
@@ -59,7 +60,7 @@ class CartItem extends StatelessWidget {
                       left: Radius.circular(15.00)),
                   image: DecorationImage(
                     image: NetworkImage(
-                        "http://10.0.2.2/products/photo/${product.photo}"),
+                        "$kProductsPhotoBaseUlt/${product.photo}"),
                     fit: BoxFit.cover,
                   ),
                 ),

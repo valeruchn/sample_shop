@@ -17,6 +17,7 @@ const kHomeScreenTitleText = 'Домашня';
 const kCartScreenTitleText = 'Кошик';
 const kConfirmationOrderText = 'Підтвердження замовлення';
 const kOrdersLogTitleText = 'Замовлення';
+const kAuthScreenTitleText = 'Авторизація';
 // SearchPanel home screen:
 const kSearchPanelLabelText = 'Пошук';
 // SearchProducts category titles:
@@ -73,3 +74,11 @@ const kOrderStatusText = 'Статус';
 const kOrderSumText = 'Сумма';
 const kOrderListText = 'Склад';
 
+// Auth screen
+const kAuthGreetingTitleText = 'Для входу або реєстрації введіть номер телефону';
+const kPhoneNumberFieldText = 'Номер телефону';
+const kIncorrectPhoneNumberText = 'Некорректний номер телефону';
+const kLicenceAgreementLabelText = 'Натискаючи кнопку відправити я приймаю умови політики конфіденційності';
+const kIncorrectLicenceAgreementLabelText = 'Прийміть умови';
+const kSendSmsCodeButtonText = 'Відправити';
+const kEnterSmsCodeLabelText = 'Введіть SMS код';

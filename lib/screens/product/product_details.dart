@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:sample_shop/common/helpers/constants/connection.constants.dart';
 import 'package:sample_shop/common/helpers/utils/favorite_product_handler.dart';
 
 // Project imports:
@@ -52,7 +53,7 @@ class ProductDetails extends StatelessWidget {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    "http://10.0.2.2/products/photo/${product.photo}"),
+                                    "$kProductsPhotoBaseUlt/${product.photo}"),
                                 fit: BoxFit.contain,
                               ),
                             ),

@@ -45,20 +45,3 @@ RouteMap createRoutes(bool isAuth) {
             : const Auth()),
   });
 }
-
-// final routes = RouteMap(routes: {
-//   '/': (route) => TabPage(
-//       child: BottomNavigator(), paths: const ['Home', 'Orders', 'Settings']),
-//   '/Home': (route) => const MaterialPage(child: HomePage()),
-//   '/Orders': (route) => const MaterialPage(child: OrdersLog()),
-//   '/Settings': (route) => const MaterialPage(child: Settings()),
-//   '/cart': (route) => MaterialPage(child: Cart()),
-//   '/auth': (route) => const MaterialPage(child: Auth()),
-//   '/profile': (route) => const MaterialPage(child: Profile()),
-//   '/product/:id': (route) => MaterialPage(
-//       child: ProductDetails(productId: route.pathParameters['id'] as String)),
-//   '/order/:id': (route) => MaterialPage(
-//           child: OrderDetails(
-//         orderId: route.pathParameters['id'] as String,
-//       )),
-// });

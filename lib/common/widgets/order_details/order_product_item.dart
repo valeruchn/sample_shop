@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
+import 'package:sample_shop/common/helpers/constants/connection.constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 import 'package:sample_shop/store/models/cart/cart_item.model.dart';
 
@@ -34,7 +35,7 @@ class OrderProductItem extends StatelessWidget {
                     left: Radius.circular(15.00)),
                 image: DecorationImage(
                   image: NetworkImage(
-                      "http://10.0.2.2/products/photo/${product.photo}"),
+                      "$kProductsPhotoBaseUlt/${product.photo}"),
                   fit: BoxFit.cover,
                 ),
               ),

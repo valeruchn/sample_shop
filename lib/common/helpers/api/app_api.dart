@@ -4,6 +4,7 @@ import 'dart:io';
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:sample_shop/common/helpers/constants/connection.constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 
 // Project imports:
@@ -46,7 +47,7 @@ class AppApi {
 
   final AuthTokenLocalStorage authTokenLocalStorage;
   final Dio dio = Dio(BaseOptions(
-      baseUrl: 'http://10.0.2.2',
+      baseUrl: kBaseUrl,
       connectTimeout: 5000,
       responseType: ResponseType.json,
       contentType: ContentType.json.toString()));

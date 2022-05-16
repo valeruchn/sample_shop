@@ -23,10 +23,10 @@ Stream<void> createOrderEpic(
               addProductsFromOrder(action.order)))
       .switchMap((CreateOrderDtoModel preparedOrder) =>
           // Добавляем заказ на api
-          Stream<CurrentOrderModel>.fromFuture(createNewOrder(preparedOrder)))
+          Stream<CurrentOrderModel>.fromFuture(createNewOrder(preparedOrder))/*)
       .switchMap((CurrentOrderModel order) =>
           // Добавляем заказ в firestore
-          Stream<CurrentOrderModel>.fromFuture(addOrder(order))
+          Stream<CurrentOrderModel>.fromFuture(addOrder(order))*/
               .expand<dynamic>((CurrentOrderModel order) =>
                   // Добавляем заказ в state
                   <dynamic>[

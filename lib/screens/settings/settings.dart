@@ -42,11 +42,7 @@ class _SettingsState extends State<Settings> {
                           ]),
                       child: TextButton(
                           onPressed: () {
-                            if (user.phone.isNotEmpty) {
-                              Routemaster.of(context).push('/profile');
-                            } else {
-                              Routemaster.of(context).push('/auth');
-                            }
+                            Routemaster.of(context).push('/profile');
                           },
                           child: const Text('Профіль')),
                     ),

@@ -16,3 +16,5 @@ const kFavouriteIconColor = Colors.red;
 // Заказы и корзина
 const kItemBackgroundColor = Color(0xFF252F33);
 const kDeleteIconColor = Colors.red;
+// Auth Screen
+const kErrorFieldLabelColor = Color(0xFFD84B4B);
