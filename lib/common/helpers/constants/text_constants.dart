@@ -82,3 +82,5 @@ const kLicenceAgreementLabelText = 'Натискаючи кнопку відпр
 const kIncorrectLicenceAgreementLabelText = 'Прийміть умови';
 const kSendSmsCodeButtonText = 'Відправити';
 const kEnterSmsCodeLabelText = 'Введіть SMS код';
+const kWrongSmsCodeLabelText = 'невірний код';
+const kRequiredCodeFieldLabelText = 'введіть код';

@@ -1,22 +1,26 @@
 //Package imports:
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:redux/redux.dart';
+import 'package:routemaster/routemaster.dart';
 
 //Project imports:
 import 'package:sample_shop/common/helpers/api/app_api.dart';
 import 'package:sample_shop/common/localStorage/auth_token_storage_options.dart';
 import 'package:sample_shop/store/actions/auth.action.dart';
-import 'package:sample_shop/store/models/auth/firebase_auth_user.model.dart';
 import 'package:sample_shop/store/models/auth/user_token.model.dart';
+import 'package:sample_shop/store/reducers/reducer.dart';
 import 'package:sample_shop/store/store.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-final AuthService authService = AuthService(authTokenLocalStorage);
+final AuthService authService = AuthService(authTokenLocalStorage, store);
 
 class AuthService {
-  AuthService(this.localService);
+  AuthService(this.localService, this.store);
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final AuthTokenLocalStorage localService;
+  final Store<AppState> store;
 
   Future<UserTokenModel> getTokenWithUserFirebaseId(
       String uid, String phone) async {
@@ -54,6 +58,22 @@ class AuthService {
     }
   }
 
+  // Проверка отправленного смс
+  Future<void> signInWithPhoneCheckSms(
+      String verificationId, String smsCode, BuildContext context) async {
+    final credential = PhoneAuthProvider.credential(
+        verificationId: verificationId, smsCode: smsCode);
+    final result = await _auth.signInWithCredential(credential).catchError((e) {
+      if (e.code == 'invalid-verification-id') {
+        store.dispatch(WrongSmsCodePending());
+      }
+    });
+    if (result.user != null) {
+      store.dispatch(CheckSmsSuccess());
+      Routemaster.of(context).pop();
+    }
+  }
+
   void _codeSend(String verificationId, int? forceResendingToken) {
     store.dispatch(CodeSendPending(
         verificationId: verificationId,
@@ -70,20 +90,5 @@ class AuthService {
 
   void _codeAutoRetrievalTimeout(String verificationId) {
     store.dispatch(CodeAutoRetrievalTimeOut(verificationId: verificationId));
-  }
-
-  // // Проверка отправленного смс
-  Future<void> signInWithPhoneCheckSms(
-      String verificationId, String smsCode) async {
-    final credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: smsCode);
-    final result = await _auth.signInWithCredential(credential).catchError((e) {
-      if (e.code == 'invalid-verification-id') {
-        store.dispatch(WrongSmsCodePending());
-      }
-    });
-    if (result.user != null) {
-      store.dispatch(CheckSmsSuccess());
-    }
   }
 }

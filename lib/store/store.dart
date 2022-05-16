@@ -2,6 +2,7 @@
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:sample_shop/store/actions/auth.action.dart';
+import 'package:sample_shop/store/models/auth/firebase_auth_user.model.dart';
 import 'package:sample_shop/store/models/order/orders_query.model.dart';
 import 'package:sample_shop/store/models/products/products.model.dart';
 import 'package:sample_shop/store/models/products/products_query.model.dart';
@@ -22,7 +23,7 @@ import 'package:sample_shop/store/models/categories/category.model.dart';
 import 'package:sample_shop/store/epics/categories.epics.dart';
 
 AppState initialState = AppState(
-    // auth: AuthUserFromFirebase.init(),
+    auth: AuthMobileModel(),
     user: UserModel(
       // uid: '',
       phone: '',

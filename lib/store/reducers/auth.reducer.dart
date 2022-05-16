@@ -35,10 +35,15 @@ AuthMobileModel _verificationFailed(
 
 AuthMobileModel _wrongSmsCode(
     AuthMobileModel state, WrongSmsCodePending action) {
-  return AuthMobileModel();
+  return AuthMobileModel(
+    wrongSmsCode: true
+  );
 }
 
 AuthMobileModel _codeRetrievalTimeOut(
     AuthMobileModel state, CodeAutoRetrievalTimeOut action) {
-  return AuthMobileModel();
+  return AuthMobileModel(
+    timeIsOut: true,
+    verificationId: action.verificationId
+  );
 }
