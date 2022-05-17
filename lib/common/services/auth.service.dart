@@ -42,10 +42,11 @@ class AuthService {
 
   Future<void> signInWithPhoneSendSms(String mobile) async {
     try {
+      store.dispatch(CodeSendPending());
       await _auth.verifyPhoneNumber(
           phoneNumber: mobile,
           timeout: const Duration(seconds: 60),
-          // forceResendingToken: _forceResendingToken,
+          forceResendingToken: store.state.auth.forceResendingToken,
           codeSent: _codeSend,
           // После успешной проверки кода
           verificationCompleted: _verificationCompleted,
@@ -61,34 +62,42 @@ class AuthService {
   // Проверка отправленного смс
   Future<void> signInWithPhoneCheckSms(
       String verificationId, String smsCode, BuildContext context) async {
-    final credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: smsCode);
-    final result = await _auth.signInWithCredential(credential).catchError((e) {
-      if (e.code == 'invalid-verification-id') {
+    try {
+      store.dispatch(CheckSmsPending());
+      final credential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: smsCode);
+      final result = await _auth.signInWithCredential(credential);
+      if (result.user != null) {
+        store.dispatch(CheckSmsSuccess());
+        Routemaster.of(context).pop();
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-verification-code') {
+        // print('wrong sms');
         store.dispatch(WrongSmsCodePending());
       }
-    });
-    if (result.user != null) {
-      store.dispatch(CheckSmsSuccess());
-      Routemaster.of(context).pop();
     }
   }
 
   void _codeSend(String verificationId, int? forceResendingToken) {
-    store.dispatch(CodeSendPending(
+    // print('code send');
+    store.dispatch(CodeSendSuccess(
         verificationId: verificationId,
         forceResendingToken: forceResendingToken));
   }
 
   void _verificationCompleted(AuthCredential authCredential) {
+    // print('verification completed');
     _auth.signInWithCredential(authCredential);
   }
 
   void _verificationFailed(FirebaseAuthException authException) {
+    // print('verification failed');
     store.dispatch(VerificationFailed(exception: authException.code));
   }
 
   void _codeAutoRetrievalTimeout(String verificationId) {
-    store.dispatch(CodeAutoRetrievalTimeOut(verificationId: verificationId));
+    // print('verification time out');
+    // store.dispatch(CodeAutoRetrievalTimeOut(verificationId: verificationId));
   }
 }

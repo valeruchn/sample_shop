@@ -11,8 +11,10 @@ class GetUserTokenPending {
 // сброс токена в хранилище и обнуление профиля в стейт
 class UnauthorizedUser {}
 
-class CodeSendPending {
-  CodeSendPending(
+class CodeSendPending{}
+
+class CodeSendSuccess {
+  CodeSendSuccess(
       {required this.verificationId, this.forceResendingToken});
 
   String verificationId;
@@ -31,4 +33,14 @@ class CodeAutoRetrievalTimeOut{
   String verificationId;
 }
 
+class CheckSmsPending{}
 class CheckSmsSuccess{}
+
+class EndAuthLoading{}
+
+class SetAuthTimer{
+  SetAuthTimer({this.timer});
+  int? timer;
+}
+
+class AuthTimerIsOut{}

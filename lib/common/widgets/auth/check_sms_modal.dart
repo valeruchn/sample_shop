@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:sample_shop/common/helpers/constants/colors_constants.dart';
 import 'package:sample_shop/common/helpers/constants/text_constants.dart';
 import 'package:sample_shop/common/services/auth.service.dart';
-import 'package:sample_shop/store/models/auth/firebase_auth_user.model.dart';
+import 'package:sample_shop/common/widgets/auth/auth_action.button.widget.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
 
 class CheckSmsModal extends StatefulWidget {
@@ -46,8 +47,17 @@ class _CheckSmsModalState extends State<CheckSmsModal> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, AuthMobileModel>(
-        converter: (store) => store.state.auth,
+    return StoreConnector<AppState, AppState>(
+        converter: (store) => store.state,
+        onWillChange: (oldState, newState) {
+          if (((oldState?.auth.timeIsOut != newState.auth.timeIsOut) &&
+                  newState.auth.timeIsOut) ||
+              (oldState?.user.phone != newState.user.phone) &&
+                  newState.user.phone != '') {
+            Navigator.of(context, rootNavigator: true).pop();
+          }
+        },
+        distinct: true,
         builder: (context, state) => AlertDialog(
               contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 10.0),
               backgroundColor: kBackGroundColor,
@@ -66,22 +76,51 @@ class _CheckSmsModalState extends State<CheckSmsModal> {
                     style: const TextStyle(
                         color: kDefaultLabelTextColor, fontSize: 20.00),
                     controller: _codeController,
+                    onChanged: (value) {
+                      setState(() {
+                        _isEmptyInput = false;
+                      });
+                    },
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         enabledBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: kDefaultBorderColor))),
                   ),
-                  if (state.wrongSmsCode && !_isEmptyInput)
+                  if ((state.auth.wrongSmsCode && !_isEmptyInput) ||
+                      (state.auth.verificationFailed != null && !_isEmptyInput))
                     _errorMessage(kWrongSmsCodeLabelText),
                   if (_isEmptyInput) _errorMessage(kRequiredCodeFieldLabelText)
                 ],
               ),
+              actionsAlignment: MainAxisAlignment.spaceBetween,
               actions: <Widget>[
-                ElevatedButton(
-                  child: const Text(kSendSmsCodeButtonText),
-                  onPressed: () =>
-                      _checkSms(state.verificationId, _codeController.text),
+                FittedBox(
+                  fit: BoxFit.contain,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 12.00),
+                    child: Row(
+                      children: [
+                        const FaIcon(
+                          FontAwesomeIcons.clock,
+                          color: kDefaultLabelTextColor,
+                        ),
+                        const SizedBox(
+                          width: 10.00,
+                        ),
+                        if (state.auth.timer != null)
+                          Text(
+                            state.auth.timer.toString(),
+                            style: const TextStyle(
+                                fontSize: 15.00, fontWeight: FontWeight.w700),
+                          )
+                      ],
+                    ),
+                  ),
+                ),
+                AuthActionButton(
+                  action: () => _checkSms(
+                      state.auth.verificationId, _codeController.text),
                 ),
               ],
             ));

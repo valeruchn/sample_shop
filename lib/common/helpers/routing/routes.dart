@@ -6,7 +6,6 @@ import 'package:routemaster/routemaster.dart';
 
 // Project imports:
 import 'package:sample_shop/common/helpers/routing/bottom_navigator/bottom.navigator.dart';
-import 'package:sample_shop/screens/auth/auth.dart';
 import 'package:sample_shop/screens/auth/phone_auth.dart';
 import 'package:sample_shop/screens/cart/cart.dart';
 import 'package:sample_shop/screens/home_page/home_page.dart';

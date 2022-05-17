@@ -18,3 +18,4 @@ const kItemBackgroundColor = Color(0xFF252F33);
 const kDeleteIconColor = Colors.red;
 // Auth Screen
 const kErrorFieldLabelColor = Color(0xFFD84B4B);
+const kDeactivatedButtonColor = Colors.grey;
