@@ -156,7 +156,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
                                     showDialog(
                                         context: context,
                                         builder: (context) {
-                                          return const CheckSmsModal();
+                                          return  CheckSmsModal(key: pinCodeModalGlobalKey);
                                         });
                                   },
                                   child: const Text(

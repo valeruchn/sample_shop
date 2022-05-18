@@ -1,13 +1,13 @@
 // Package imports:
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:sample_shop/common/localStorage/auth_token_storage_options.dart';
-import 'package:sample_shop/common/services/auth.service.dart';
 
-// // Project imports:
+// Project imports:
 import 'package:sample_shop/store/actions/auth.action.dart';
 import 'package:sample_shop/store/actions/user.action.dart';
 import 'package:sample_shop/store/models/auth/user_token.model.dart';
+import 'package:sample_shop/common/localStorage/auth_token_storage_options.dart';
+import 'package:sample_shop/common/services/auth.service.dart';
 
 Stream<void> authUserGetTokenEpic(
     Stream<dynamic> actions, EpicStore<dynamic> store) {
@@ -17,7 +17,12 @@ Stream<void> authUserGetTokenEpic(
               authService.getTokenWithUserFirebaseId(action.uid, action.phone))
           .switchMap((UserTokenModel result) => Stream<void>.fromFuture(
               authTokenLocalStorage.addTokenToLocalStorage(result.token)))
-          .expand((value) => <dynamic>[GetUserProfilePending()]))
+          .expand((value) => <dynamic>[
+                // сброс стейта авторизации
+                CheckSmsSuccess(),
+                // запрос профиля пользователя
+                GetUserProfilePending()
+              ]))
       .handleError((e) => print('set token error: $e'));
 }
 

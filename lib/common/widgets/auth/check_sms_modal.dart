@@ -12,6 +12,10 @@ import 'package:sample_shop/common/services/auth.service.dart';
 import 'package:sample_shop/common/widgets/auth/auth_action.button.widget.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
 
+// Ключь к состоянию модального окна
+// используется для управления им из других виджетов
+final pinCodeModalGlobalKey = GlobalKey<_CheckSmsModalState>();
+
 class CheckSmsModal extends StatefulWidget {
   const CheckSmsModal({Key? key}) : super(key: key);
 
@@ -51,9 +55,7 @@ class _CheckSmsModalState extends State<CheckSmsModal> {
         converter: (store) => store.state,
         onWillChange: (oldState, newState) {
           if (((oldState?.auth.timeIsOut != newState.auth.timeIsOut) &&
-                  newState.auth.timeIsOut) ||
-              (oldState?.user.phone != newState.user.phone) &&
-                  newState.user.phone != '') {
+              newState.auth.timeIsOut)) {
             Navigator.of(context, rootNavigator: true).pop();
           }
         },

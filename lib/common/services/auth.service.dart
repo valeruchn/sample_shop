@@ -6,6 +6,7 @@ import 'package:routemaster/routemaster.dart';
 
 //Project imports:
 import 'package:sample_shop/common/helpers/api/app_api.dart';
+import 'package:sample_shop/common/helpers/utils/close_pin_code_modal.dart';
 import 'package:sample_shop/common/localStorage/auth_token_storage_options.dart';
 import 'package:sample_shop/store/actions/auth.action.dart';
 import 'package:sample_shop/store/models/auth/user_token.model.dart';
@@ -68,8 +69,8 @@ class AuthService {
           verificationId: verificationId, smsCode: smsCode);
       final result = await _auth.signInWithCredential(credential);
       if (result.user != null) {
-        store.dispatch(CheckSmsSuccess());
-        Routemaster.of(context).pop();
+        // закрытие модального окна с вводом пин кода, если оно открыто
+        closePinCodeModal();
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-verification-code') {
@@ -87,7 +88,6 @@ class AuthService {
   }
 
   void _verificationCompleted(AuthCredential authCredential) {
-    // print('verification completed');
     _auth.signInWithCredential(authCredential);
   }
 

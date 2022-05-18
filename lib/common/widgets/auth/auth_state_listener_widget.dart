@@ -1,11 +1,10 @@
 // Flutter imports:
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:equatable/equatable.dart';
+import 'dart:async';
 
 // Project imports:
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -61,7 +60,7 @@ class _AuthStateListenerState extends State<AuthStateListener> {
 
   @override
   void dispose() {
-    store.dispatch(SetAuthTimer());
+    // store.dispatch(SetAuthTimer());
     _timer.cancel();
     super.dispose();
   }
@@ -69,28 +68,31 @@ class _AuthStateListenerState extends State<AuthStateListener> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _FilterModel>(
-        converter: (store) => _FilterModel(
-            codeSend: store.state.auth.codeSend,
-            timeIsOut: store.state.auth.timeIsOut,
-            phone: store.state.user.phone),
-        builder: (context, state) => widget.child,
-        onWillChange: (oldState, newState) {
-          if (oldState != newState && newState.codeSend) {
-            // Сбрасываем таймер
-            if (_timer.isActive) {
-              _timer.cancel();
-              store.dispatch(SetAuthTimer());
-            }
-            _startTimer();
-            // Показываем модальное окно
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return const CheckSmsModal();
-                });
+      converter: (store) => _FilterModel(
+          codeSend: store.state.auth.codeSend,
+          timeIsOut: store.state.auth.timeIsOut,
+          phone: store.state.user.phone),
+      builder: (context, state) => widget.child,
+      onWillChange: (oldState, newState) {
+        if (oldState != newState && newState.codeSend) {
+          // Сбрасываем таймер
+          if (_timer.isActive) {
+            _timer.cancel();
+            store.dispatch(SetAuthTimer());
           }
-          // если телефон не пустой - редирект на профиль(?)
-        },
-        distinct: true);
+          _startTimer();
+          // Показываем модальное окно
+          showDialog(
+              context: context,
+              builder: (context) {
+                return CheckSmsModal(key: pinCodeModalGlobalKey);
+              });
+        }
+        // если телефон не пустой - редирект на профиль(?)
+      },
+      distinct: true,
+      //  сброс стейта авторизации при закрытии скрина авторизации
+      onDispose: (store) => store.dispatch(CheckSmsSuccess()),
+    );
   }
 }
