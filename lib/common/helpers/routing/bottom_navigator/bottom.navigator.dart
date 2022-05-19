@@ -1,12 +1,16 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:routemaster/routemaster.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sample_shop/common/widgets/double_back_to_close/double_back_to_close.dart';
+
+// Project imports:
 import 'package:sample_shop/common/widgets/notification/notification.widget.dart';
 
 class BottomNavigator extends StatefulWidget {
-  BottomNavigator({Key? key}) : super(key: key);
+  const BottomNavigator({Key? key}) : super(key: key);
 
   @override
   State<BottomNavigator> createState() => _BottomNavigatorState();
@@ -17,7 +21,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   Widget build(BuildContext context) {
     final tabPage = TabPage.of(context);
     return Scaffold(
-        // Обработка сообщений, позже вынести из навигатора
+        // Уведомления о событиях
+        key: scaffoldNotificationKey,
         body: NotificationHandler(
           // Навигатор
           child: TabBarView(
@@ -38,7 +43,9 @@ class _BottomNavigatorState extends State<BottomNavigator> {
                 borderSide: BorderSide(width: 0), insets: EdgeInsets.all(0)),
             tabs: const <Widget>[
               Tab(text: 'Домашня', icon: FaIcon(FontAwesomeIcons.house)),
-              Tab(text: 'Замовлення', icon: FaIcon(FontAwesomeIcons.cartShopping)),
+              Tab(
+                  text: 'Замовлення',
+                  icon: FaIcon(FontAwesomeIcons.cartShopping)),
               Tab(text: 'Додатково', icon: FaIcon(FontAwesomeIcons.bars)),
               // Tab(text: 'Cart', icon: Icon(Icons.shopping_cart)),
             ],

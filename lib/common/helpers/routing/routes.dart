@@ -17,10 +17,12 @@ import 'package:sample_shop/screens/product/product_details.dart';
 import 'package:sample_shop/screens/profile/profile.dart';
 import 'package:sample_shop/screens/settings/settings.dart';
 
+final GlobalKey<NavigatorState> navigatorStateKey = GlobalKey<NavigatorState>();
+
 RouteMap createRoutes(bool isAuth) {
   return RouteMap(routes: {
-    '/': (route) => TabPage(
-        child: BottomNavigator(), paths: const ['Home', 'Orders', 'Settings']),
+    '/': (route) => const TabPage(
+        child: BottomNavigator(), paths: ['Home', 'Orders', 'Settings']),
     '/Home': (route) => const MaterialPage(child: HomePage()),
     '/Orders': (route) =>
         MaterialPage(child: isAuth ? const OrdersLog() : const PhoneAuth()),

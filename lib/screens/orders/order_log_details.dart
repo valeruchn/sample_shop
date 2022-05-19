@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:sample_shop/common/widgets/double_back_to_close/double_back_to_close.dart';
 import 'package:sample_shop/common/widgets/order_details/order_details.dart';
 import 'package:sample_shop/common/widgets/preloader/preloader.dart';
 
