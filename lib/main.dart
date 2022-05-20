@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 //Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,7 +11,6 @@ import 'package:routemaster/routemaster.dart';
 // Project imports:
 import 'package:sample_shop/common/helpers/routing/routes.dart';
 import 'package:sample_shop/common/styles/app_theme.dart';
-import 'package:sample_shop/common/widgets/double_back_to_close/double_back_to_close.dart';
 import 'package:sample_shop/store/actions/auth.action.dart';
 import 'package:sample_shop/store/reducers/reducer.dart';
 import 'package:sample_shop/store/store.dart';
@@ -37,20 +37,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Проверка авторизации
     // _checkAuth();
-    return DoubleBackToClose(
-      child: StoreProvider(
-        store: store,
-        child: StoreConnector<AppState, bool>(
-          onInit: (store) => _checkAuth(),
-          converter: (store) => store.state.user.phone.isNotEmpty,
-          builder: (context, isAuth) => MaterialApp.router(
-            title: 'Flutter Demo',
-            theme: appTheme,
-            routerDelegate: RoutemasterDelegate(
+    return StoreProvider(
+      store: store,
+      child: StoreConnector<AppState, bool>(
+        onInit: (store) => _checkAuth(),
+        converter: (store) => store.state.user.phone.isNotEmpty,
+        builder: (context, isAuth) => MaterialApp.router(
+          title: 'Flutter Demo',
+          theme: appTheme,
+          routerDelegate: RoutemasterDelegate(
               navigatorKey: navigatorStateKey,
-                routesBuilder: (context) => createRoutes(isAuth)),
-            routeInformationParser: const RoutemasterParser(),
-          ),
+              routesBuilder: (context) => createRoutes(isAuth)),
+          routeInformationParser: const RoutemasterParser(),
         ),
       ),
     );

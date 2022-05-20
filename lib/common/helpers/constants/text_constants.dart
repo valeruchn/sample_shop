@@ -61,6 +61,7 @@ const kLostInternetConnectionError = 'Немає доступу до мереж�
 const kLostConnectionWithApiErrorText = "Немає з'єднання з сервером";
 const kResponseErrorText = 'Помилка отримання даних';
 const kNewOrderCreatedSuccessText = 'Замовлення створено успішно';
+const kExitAppActionText = 'Натисніть щоб вийти з додатку';
 
 // Order statuses:
 const kNewOrderStatusText = 'нове';

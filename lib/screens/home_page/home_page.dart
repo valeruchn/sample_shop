@@ -7,8 +7,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:sample_shop/common/widgets/home_page/get_products_listener.widget.dart';
-import 'package:sample_shop/store/models/products/products.model.dart';
 
 // Project imports:
 import 'package:sample_shop/store/reducers/reducer.dart';
@@ -18,6 +16,8 @@ import 'package:sample_shop/common/widgets/home_page/search_panel.dart';
 import 'package:sample_shop/screens/home_page/product_card.dart';
 import 'package:sample_shop/store/actions/products.action.dart';
 import 'package:sample_shop/store/store.dart';
+import 'package:sample_shop/common/widgets/home_page/get_products_listener.widget.dart';
+import 'package:sample_shop/store/models/products/products.model.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -181,7 +181,8 @@ class _HomePageState extends State<HomePage> {
                         : [],
                   ),
                 ),
-                if(state.productsQuery.isLoad) const CircularProgressIndicator()
+                if (state.productsQuery.isLoad)
+                  const CircularProgressIndicator()
               ],
             ),
           ),

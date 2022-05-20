@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:routemaster/routemaster.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sample_shop/common/widgets/double_back_to_close/double_back_to_close.dart';
+import 'package:sample_shop/common/helpers/utils/double_back_to_close.dart';
 
 // Project imports:
 import 'package:sample_shop/common/widgets/notification/notification.widget.dart';
@@ -17,20 +17,23 @@ class BottomNavigator extends StatefulWidget {
 }
 
 class _BottomNavigatorState extends State<BottomNavigator> {
+
   @override
   Widget build(BuildContext context) {
     final tabPage = TabPage.of(context);
     return Scaffold(
         // Уведомления о событиях
         key: scaffoldNotificationKey,
-        body: NotificationHandler(
-          // Навигатор
-          child: TabBarView(
-            controller: tabPage.controller,
-            children: [
-              for (final stack in tabPage.stacks)
-                PageStackNavigator(stack: stack),
-            ],
+        body: DoubleBackToCloseListener(
+          child: NotificationHandler(
+            // Навигатор
+            child: TabBarView(
+              controller: tabPage.controller,
+              children: [
+                for (final stack in tabPage.stacks)
+                  PageStackNavigator(stack: stack),
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: Container(
